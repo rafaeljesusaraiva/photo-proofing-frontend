@@ -21,6 +21,7 @@ module.exports = {
     // create the final bundled file in dist folder in the root of the project
     output: {
         path:path.resolve(__dirname, "dist"),
+        publicPath: '/'
     },
     // tell webpack to transpile javascript files using babel before bundling
     module: {
@@ -55,6 +56,9 @@ module.exports = {
                     }
             }
         }]
+    },
+    devServer: {
+        historyApiFallback: true,
     },
     // This will take the /public/index.html, inject script tag to it and move that HTML file to the dist folder
     plugins: [
