@@ -4,6 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     // where to start bundling the javascript files
     entry: path.join(__dirname, "src", "index.js"),
     // create the final bundled file in dist folder in the root of the project
@@ -12,24 +13,41 @@ module.exports = {
     },
     // tell webpack to transpile javascript files using babel before bundling
     module: {
-        rules: [{
-            test: /\.?js$/,
-            exclude: /node_modules/,
-            use: {
-                loader: "babel-loader",
-                options: {
-                    presets: [
-                        '@babel/preset-env', // transpiling ES2015+ syntax
-                        '@babel/preset-react' // transpiling react code
-                    ]
-                }
+        rules: [
+            // import CSS files
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+            // import images
+            {
+                test: /\.(png|jp(e*)g|svg|gif)$/,
+                use: ['file-loader'],
+            },
+            // import svg as component
+            {
+                test: /\.svg$/,
+                use: ['@svgr/webpack'],
+            },
+            // babel rules
+            {
+                test: /\.?js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            '@babel/preset-env', // transpiling ES2015+ syntax
+                            '@babel/preset-react' // transpiling react code
+                        ]
+                    }
             }
         }]
     },
     // This will take the /public/index.html, inject script tag to it and move that HTML file to the dist folder
     plugins: [
         new HtmlWebpackPlugin({
-          template: path.join(__dirname, "src", "index.html"),
+          template: path.join(__dirname, "public", "index.html"),
         }),
     ],
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Container } from "shards-react";
 
 function App() {
