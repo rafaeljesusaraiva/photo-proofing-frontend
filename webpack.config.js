@@ -5,6 +5,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    // aliases for importing
+    resolve: {
+        extensions: ['.js', '.ts'],
+        alias: {
+            '@assets': path.resolve(__dirname, 'src/assets/index.js'),
+            '@components': path.resolve(__dirname, 'src/components/index.js'),
+            '@services': path.resolve(__dirname, 'src/services/index.js'),
+            '@utils': path.resolve(__dirname, 'src/utils/index.js'),
+            '@views': path.resolve(__dirname, 'src/views/index.js'),
+        },
+    },
     // where to start bundling the javascript files
     entry: path.join(__dirname, "src", "index.js"),
     // create the final bundled file in dist folder in the root of the project
@@ -21,8 +32,9 @@ module.exports = {
             },
             // import images
             {
-                test: /\.(png|jp(e*)g|svg|gif)$/,
-                use: ['file-loader'],
+                test: /\.(png|jp(e*)g|svg|gif|ico)$/,
+                exclude: /node_modules/,
+                use: ['file-loader?name=[name].[ext]'],
             },
             // import svg as component
             {
