@@ -6,7 +6,7 @@ export function CoolLog() {
         "padding: 100px",
         "font-weight: bolder",
         "font-size: 40px",
-        "-webkit-text-stroke-width: 1px",
+        "-webkit-text-strokeWidth: 1px",
         "-webkit-text-stroke-color: yellow",
         "text-transform: uppercase",
         "text-align: center",

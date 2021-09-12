@@ -1,11 +1,12 @@
-import { Base } from './Base';
-import { IndexPage } from './Index/index';
-import { LoginPage } from './Login/LoginPage';
-import { SignupPage } from './SignUp/SignupPage'
+export { Base } from './Base';
 
-export {
-    Base,
-    IndexPage,
-    LoginPage,
-    SignupPage
-}
+// Public Pages
+export { LoginPage } from './Public/LoginPage';
+export { SignupPage } from './Public/SignupPage';
+
+// Client Pages
+export { IndexPage } from './Client/IndexPage';
+export { CartPage } from './Client/CartPage';
+
+// Admin Pages
+export { AdminPage } from './Admin/AdminPage';

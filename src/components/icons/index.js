@@ -1,15 +1,8 @@
-import { MiAlert } from "./MiAlert";
-import { MiArrowSmall } from "./MiArrowSmall";
-import { MiCart } from "./MiCart";
-import { MiCheck } from "./MiCheck";
-import { MiInfoCircle } from "./MiInfoCircle";
-import { MiStop } from "./MiStop";
-
-export {
-    MiAlert,
-    MiArrowSmall,
-    MiCart,
-    MiCheck,
-    MiInfoCircle,
-    MiStop
-}
+export { MiAlert } from './MiAlert';
+export { MiArrowSmall } from './MiArrowSmall';
+export { MiCart } from './MiCart';
+export { MiCheck } from './MiCheck';
+export { MiCross } from './MiCross';
+export { MiEye } from './MiEye';
+export { MiInfoCircle } from './MiInfoCircle';
+export { MiStop } from './MiStop';

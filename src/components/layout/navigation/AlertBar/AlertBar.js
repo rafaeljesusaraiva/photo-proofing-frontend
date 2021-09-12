@@ -18,7 +18,7 @@ export function AlertBar({ status, message }) {
         <div className={"alert alert-"+status}>
             <div className="flex-1">
                 {icon}
-                <label className="ml-2">{message}</label>
+                <span className="ml-2">{message}</span>
             </div>
         </div>
     );

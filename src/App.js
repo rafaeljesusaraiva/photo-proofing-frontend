@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { PrivateRoute } from '@components'
-import { Base, IndexPage, LoginPage, SignupPage } from '@views'
+import { AdminRoute, PrivateRoute } from '@components'
+import { Base, AdminPage, CartPage, IndexPage, LoginPage, SignupPage } from '@views'
 
 const colors = {
   brand: '#181919',
@@ -23,14 +23,20 @@ function App() {
     <Base>
       <BrowserRouter>
         <Switch>
-          {/* Public Routes */}
-          <Route path="/login" exact={true} component={LoginPage} />
-          <Route path="/signup" exact={true} component={SignupPage} />
-
-          {/* Private - Client Routes */}
-          <PrivateRoute path="/" exact={true} component={IndexPage} />
-          
-          {/* Private - Admin Routes */}
+            {/* Public Routes */}
+            <Route path="/" exact={true} component={IndexPage} />
+            <Route path="/login" exact={true} component={LoginPage} />
+            <Route path="/signup" exact={true} component={SignupPage} />
+            <Route path="/recuperar-password" exact={true} component={IndexPage} />
+            
+            {/* Private - Client Routes */}
+            <PrivateRoute path="/prova/:id" exact={true} component={IndexPage} />
+            <PrivateRoute path="/carrinho" exact={true} component={CartPage} />
+            <PrivateRoute path="/resumo-carrinho" exact={true} component={IndexPage} />
+            <PrivateRoute path="/perfil" exact={true} component={IndexPage} />
+            
+            {/* Private - Admin Routes */}
+            <AdminRoute path="/administracao" exact={true} component={AdminPage} />
         </Switch>
       </BrowserRouter>
     </Base>
