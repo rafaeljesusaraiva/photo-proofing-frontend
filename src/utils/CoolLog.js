@@ -1,8 +1,8 @@
 export function CoolLog() {
     let backgroundImage = [
-        "background-image: url(https://i.pinimg.com/originals/5b/43/02/5b4302c2f6413454c782aeec866143cf.gif)",
+        "background-image: url(https://i.pinimg.com/originals/d0/45/6e/d0456e80877753487e03deaab16c3d26.gif)",
         "background-size: cover",
-        "color: black",
+        "color: #feda4a",
         "padding: 100px",
         "font-weight: bolder",
         "font-size: 40px",
@@ -10,7 +10,7 @@ export function CoolLog() {
         "-webkit-text-stroke-color: yellow",
         "text-transform: uppercase",
         "text-align: center",
-        "letter-spacing: 1px",
+        "letter-spacing: 6px",
       ].join(" ;");
     console.log("%cMay the force be with you", backgroundImage);
 }
