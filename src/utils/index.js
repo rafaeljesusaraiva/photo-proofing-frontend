@@ -1,5 +1,9 @@
+import { CoolLog } from "./CoolLog";
 import { HandleResponse } from "./HandleResponse";
+import { Timeout } from './Timeout';
 
 export {
-    HandleResponse
+    CoolLog,
+    HandleResponse,
+    Timeout
 }

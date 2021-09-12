@@ -2,6 +2,8 @@
 const path = require('path');
 // used to inject webpack as a script tag to the HTML file
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// used to add .env file
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     mode: 'development',
@@ -9,11 +11,12 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.ts'],
         alias: {
-            '@assets': path.resolve(__dirname, 'src/assets/index.js'),
-            '@components': path.resolve(__dirname, 'src/components/index.js'),
-            '@services': path.resolve(__dirname, 'src/services/index.js'),
-            '@utils': path.resolve(__dirname, 'src/utils/index.js'),
-            '@views': path.resolve(__dirname, 'src/views/index.js'),
+            '@assets$': path.resolve(__dirname, 'src/assets/index.js'),
+            '@components$': path.resolve(__dirname, 'src/components/index.js'),
+            '@components': path.resolve(__dirname, 'src/components'),
+            '@services$': path.resolve(__dirname, 'src/services/index.js'),
+            '@utils$': path.resolve(__dirname, 'src/utils/index.js'),
+            '@views$': path.resolve(__dirname, 'src/views/index.js'),
         },
     },
     // where to start bundling the javascript files
@@ -29,7 +32,7 @@ module.exports = {
             // import CSS files
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: ["style-loader", "css-loader", "postcss-loader"],
             },
             // import images
             {
@@ -65,5 +68,6 @@ module.exports = {
         new HtmlWebpackPlugin({
           template: path.join(__dirname, "public", "index.html"),
         }),
+        new Dotenv()
     ],
 }

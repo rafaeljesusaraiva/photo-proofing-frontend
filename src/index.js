@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import { App } from './App';
+import { CoolLog } from '@utils';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('app')
-);
+import './style.css';
+
+CoolLog();
+
+ReactDOM.render(<App />, document.getElementById('root'));
