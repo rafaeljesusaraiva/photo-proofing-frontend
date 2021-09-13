@@ -1,23 +1,31 @@
 import React from "react";
 
 export function AlbumCard(props) {
-    const cardInfo = props.info;
+    const image = props.data;
     const orderSizes = props.options;
-    console.log(cardInfo)
+    const addImageToOrder = props.addImage;
+    const getSizes = () => {
+        let t = [];
+        orderSizes.forEach((element, index) => {
+            t.push(
+                <button key={index+1} onClick={()=>addImageToOrder(props.counter, image, element)} className="btn md:btn-sm hover:bg-base-100">
+                    {element.size}
+                </button>
+            );
+        });
+        return t;
+    }
+
     return (
-        <div className={"card bordered "+props.className}>
-            <figure>
-                <img src="https://picsum.photos/id/1005/400/250"/>
-            </figure> 
-            <div className="card-body bg-base-300">
-                <h2 className="card-title">Top image
-                <div className="badge mx-2 badge-secondary">NEW</div>
-                </h2> 
-                <p>Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit sit necessitatibus veritatis sed molestiae voluptates incidunt iure sapiente.</p> 
-                <div className="justify-end card-actions">
-                <button className="btn btn-secondary">More info</button>
+        <div className="flex items-center justify-center">
+            <div className=" w-80 bg-base-300 rounded-xl overflow-hidden shadow-lg">
+                <img src={image.url}/>
+                <div className="p-4">
+                    <div className="btn-group flex-nowrap justify-center">
+                        {getSizes()}
+                    </div> 
                 </div>
             </div>
-        </div> 
+        </div>
     );
 }
