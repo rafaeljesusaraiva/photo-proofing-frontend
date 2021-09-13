@@ -19,6 +19,7 @@ export function AlbumPage(props) {
         let itemToChangeId = requestedImage.id+'-'+requestedSize.size;
         let imageNumber = (key+1).toString().padStart(3, "0");
         let imageTitle = `${album.title} - #${imageNumber}`;
+        
         if (inCart(itemToChangeId)) {
             let currentQtd = getItem(itemToChangeId);
             currentQtd = currentQtd.quantity;
@@ -28,7 +29,7 @@ export function AlbumPage(props) {
                 id: itemToChangeId,
                 name: imageTitle,
                 imageId: requestedImage.id,
-                imageUrl: process.env.REACT_APP_DATABASE_URL + requestedImage.imagePath,
+                imageUrl: requestedImage.url,
                 size: requestedSize.size,
                 sizeId: requestedSize.id,
                 price: requestedSize.price

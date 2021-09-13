@@ -9,9 +9,7 @@ export function CartTableRow(props) {
     const selectCounter = () => {
         let t = [];
         for (let i=1; i<101; i++) {
-            (ItemInfo.quantity === i) 
-                ? t.push(<option key={i} defaultValue>{i}</option>)
-                : t.push(<option key={i}>{i}</option>)
+            t.push(<option key={i} value={i}>{i}</option>);
         }
         return t;
     }
@@ -36,7 +34,7 @@ export function CartTableRow(props) {
                 {ItemInfo.size}
             </td>
             <td>
-                <select className="select select-bordered" onChange={(str, nbr)=>updateItemQuantity(ItemInfo.id, nbr)}>
+                <select className="select select-bordered" value={ItemInfo.quantity} onChange={(e) => updateItemQuantity(ItemInfo.id, e.target.value)}>
                     {selectCounter()}
                 </select> 
             </td>
