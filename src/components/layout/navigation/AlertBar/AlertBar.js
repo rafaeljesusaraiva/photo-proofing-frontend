@@ -15,7 +15,7 @@ export function AlertBar({ status, message }) {
     }
     
     return (
-        <div className={"alert alert-"+status}>
+        <div className={"alert z-50 alert-"+status}>
             <div className="flex-1">
                 {icon}
                 <span className="ml-2">{message}</span>
