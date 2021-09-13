@@ -3,6 +3,7 @@ import { Authentication } from "@services";
 
 export const Api = {
     getAlbums,
+    getPhotoSizes,
     changePassword,
     resetPassword
 }
@@ -19,6 +20,21 @@ function getAlbums() {
         .then(HandleResponse)
         .then(albums => {
             return albums.message;
+        });
+}
+
+function getPhotoSizes() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json'
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/all`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
         });
 }
 

@@ -1,4 +1,5 @@
 // custom folder
+import { AlbumCard } from './layout/custom/AlbumCard';
 import { Card } from './layout/custom/Card';
 import { CartTableRow } from './layout/custom/CartTableRow';
 import { CookieUsage } from './layout/custom/CookieUsage';
@@ -13,6 +14,7 @@ import { ConditionalLink } from './routing/ConditionalLink';
 import { PrivateRoute } from './routing/PrivateRoute';
 
 export {
+    AlbumCard,
     Card,
     CartTableRow,
     CookieUsage,
