@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Redirect, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { AlertBar, NavBar } from "@components";
 import { MiArrowSmall } from "@components/icons"
 import { Authentication } from "@services";
 import { Timeout } from "@utils";
+import { useCart } from "react-use-cart";
 
 export function LoginPage() {
 
@@ -13,6 +14,7 @@ export function LoginPage() {
     const [inputExtraCss, setInputExtraCss] = useState('');
     const [inputLoading, setInputLoading] = useState(false);
     const [alert, setAlert] = useState(null);
+    const { setItems } = useCart();
 
     let currentUser = Authentication.currentUserValue;
 
@@ -22,6 +24,7 @@ export function LoginPage() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
         setInputLoading(true);
         await Timeout(750);
         let newUser = await Authentication.login(email, password)
@@ -30,7 +33,11 @@ export function LoginPage() {
                 setAlert(<AlertBar status="error" message={error}/>);
                 setInputExtraCss("input-error input-bordered");
             });
+
         if (newUser) {
+            if (newUser.message.cart !== undefined && newUser.message.cart !== '') {
+                setItems(JSON.parse(newUser.message.cart));
+            }
             history.push('/')
         } else {
             setInputLoading(false);
@@ -62,9 +69,9 @@ export function LoginPage() {
                         </div>
                     </div>
                     <span className="text-sm md:text-md pt-4 pb-2 text-center">
-                        Esqueceu-se da palavra-passe? <a className="link whitespace-nowrap" href="/recuperar-password">Clique aqui</a>
+                        Esqueceu-se da palavra-passe? <Link className="link whitespace-nowrap" to="/recuperar-password">Clique aqui</Link>
                         <br/>
-                        Não tem conta? <a className="link whitespace-nowrap" href="/signup">Registe-se</a>
+                        Não tem conta? <Link className="link whitespace-nowrap" to="/signup">Registe-se</Link>
                     </span>
                 </form>
             </div>

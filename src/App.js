@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import { AdminRoute, PrivateRoute } from '@components'
-import { Base, AdminPage, CartPage, IndexPage, LoginPage, SignupPage } from '@views'
+import { Base, AdminPage, CartPage, ForgotPasswordPage, ResetPasswordPage, IndexPage, LoginPage, SignupPage } from '@views'
 
 const colors = {
   brand: '#181919',
@@ -27,7 +27,8 @@ function App() {
             <Route path="/" exact={true} component={IndexPage} />
             <Route path="/login" exact={true} component={LoginPage} />
             <Route path="/signup" exact={true} component={SignupPage} />
-            <Route path="/recuperar-password" exact={true} component={IndexPage} />
+            <Route path="/recuperar-password" exact={true} component={ForgotPasswordPage} />
+            <Route path="/alterar-password" exact={true} component={ResetPasswordPage} />
             
             {/* Private - Client Routes */}
             <PrivateRoute path="/prova/:id" exact={true} component={IndexPage} />

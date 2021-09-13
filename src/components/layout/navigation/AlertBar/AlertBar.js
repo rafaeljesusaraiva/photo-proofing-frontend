@@ -5,13 +5,13 @@ export function AlertBar({ status, message }) {
     // status => info | success | warning | error
     let icon;
     if (status === 'info') {
-        icon = <MiInfoCircle/>
+        icon = <MiInfoCircle className="h-6 w-6"/>
     } else if (status === 'success') {
-        icon = <MiCheck/>
+        icon = <MiCheck className="h-6 w-6"/>
     } else if (status === 'warning') {
-        icon = <MiAlert/>
+        icon = <MiAlert className="h-6 w-6"/>
     } else {
-        icon = <MiStop/>
+        icon = <MiStop className="h-6 w-6"/>
     }
     
     return (

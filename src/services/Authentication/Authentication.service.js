@@ -7,6 +7,7 @@ export const Authentication = {
     isAdmin,
     login,
     logout,
+    registerUser,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue () { return currentUserSubject.value }
 };
@@ -49,8 +50,40 @@ function login(email, password) {
         });
 }
 
-function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    currentUserSubject.next(null);
+function logout(cartJson) {
+    
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': currentUserSubject._value.token
+        },
+        body: JSON.stringify({ cartJson })
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/updateCart`, requestOptions)
+        .then(HandleResponse)
+        .then(user => {
+            // remove user from local storage to log user out
+            localStorage.removeItem('currentUser');
+            currentUserSubject.next(null);
+
+            return user;
+        });
+}
+
+function registerUser(name, email, password) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account`, requestOptions)
+        .then(HandleResponse)
+        .then(user => {
+            console.log(user)
+
+            return user;
+        });
 }

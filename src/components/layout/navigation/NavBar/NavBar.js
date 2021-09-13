@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { MiCart } from "@components/icons";
 import { useCart } from "react-use-cart";
 import { Authentication } from "@services";
@@ -7,11 +7,11 @@ import { Authentication } from "@services";
 export function NavBar(props) {
     const { isPublic, alertBar } = props;
     const history = useHistory();
-    const { totalItems } = useCart();
+    const { totalItems, items } = useCart();
     let currentUser = Authentication.currentUserValue;
 
     const handleLogout = async () => {
-        await Authentication.logout();
+        await Authentication.logout(items);
         history.push('/');
     }
 
@@ -19,28 +19,28 @@ export function NavBar(props) {
         <div className="flex flex-col gap-y-5">
             <div className="navbar col-span-1 shadow-lg md:col-span-3 bg-neutral-focus text-neutral-content md:rounded-box">
                 <div className="flex-1 px-2 mx-2">
-                    <a href="/" className="text-md md:text-xl font-bold">
+                    <Link to="/" className="text-md md:text-xl font-bold">
                         Prova Fotografias
-                    </a>
+                    </Link>
                 </div>
                 {isPublic ? '' : (
                     <>
                         <div className="flex-none px-2 mx-2 pr-0 mr-0">
                             <div className="items-stretch flex">
-                                <a className="btn btn-ghost btn-sm rounded-btn hidden sm:inline-flex" href="/">
+                                <Link to="/" className="btn btn-ghost btn-sm rounded-btn hidden sm:inline-flex">
                                     Início
-                                </a> 
+                                </Link>
                                 {currentUser ? (
-                                    <a className="btn btn-ghost btn-sm rounded-btn" href="/carrinho">
+                                    <Link to="/carrinho" className="btn btn-ghost btn-sm rounded-btn">
                                         <MiCart className="h-6 w-6"/>
                                         <div className="ml-2 indicator-item indicator-middle indicator-end badge badge-secondary">{totalItems}</div> 
-                                    </a> 
+                                    </Link>
                                 ) : (
                                     <div className="flex-none pr-2 mr-2">
                                         <div className="items-stretch flex">
-                                            <a className="btn btn-ghost btn-sm rounded-btn" href="/login">
+                                            <Link to="/login" className="btn btn-ghost btn-sm rounded-btn">
                                                 Login
-                                            </a> 
+                                            </Link>
                                         </div>
                                     </div> 
                                 )}
@@ -56,10 +56,10 @@ export function NavBar(props) {
                                     </div>
                                     <ul tabIndex="0" className="mt-2 p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52">
                                         <li>
-                                            <a href="/perfil">Perfil</a>
+                                            <Link to="/perfil">Perfil</Link>
                                         </li> 
                                         <li>
-                                            <a href="/encomendas">Encomendas</a>
+                                            <Link to="/encomendas">Encomendas</Link>
                                         </li> 
                                         <li>
                                             <a onClick={handleLogout}>Sair</a>
