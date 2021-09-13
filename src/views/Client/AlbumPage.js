@@ -23,7 +23,7 @@ export function AlbumPage(props) {
         if (inCart(itemToChangeId)) {
             let currentQtd = getItem(itemToChangeId);
             currentQtd = currentQtd.quantity;
-            updateItemQuantity(itemToChangeId, currentQtd+1)
+            updateItemQuantity(itemToChangeId, parseInt(currentQtd+1))
         } else {
             addItem({
                 id: itemToChangeId,

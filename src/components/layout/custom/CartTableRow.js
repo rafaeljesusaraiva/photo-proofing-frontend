@@ -22,6 +22,9 @@ export function CartTableRow(props) {
         //   isClosable: true,
         // })
     }
+    const updateItem = (e) => {
+        updateItemQuantity(ItemInfo.id, parseInt(e.target.value))
+    }
 
     return (
         <tr>
@@ -34,7 +37,7 @@ export function CartTableRow(props) {
                 {ItemInfo.size}
             </td>
             <td>
-                <select className="select select-bordered" value={ItemInfo.quantity} onChange={(e) => updateItemQuantity(ItemInfo.id, e.target.value)}>
+                <select className="select select-bordered" value={ItemInfo.quantity} onChange={updateItem}>
                     {selectCounter()}
                 </select> 
             </td>

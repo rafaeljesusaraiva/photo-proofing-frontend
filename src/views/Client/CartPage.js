@@ -10,6 +10,8 @@ export function CartPage() {
     const openPreview = (url) => setimagePreview({ show: true, url: url });
     const closePreview = () => setimagePreview({ show: false, url: null });
 
+    console.log(items)
+
     return (
         <>
             <NavBar alertBar={alert}/>
