@@ -7,6 +7,8 @@ import { isEmail } from "validator";
 
 export function ForgotPasswordPage() {
 
+    document.title = `Esqueci-me da Palavra-passe | Rafael Jesus Saraiva`;
+
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
     const [inputLoading, setInputLoading] = useState(false);

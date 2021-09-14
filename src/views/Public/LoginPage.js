@@ -8,6 +8,8 @@ import { useCart } from "react-use-cart";
 
 export function LoginPage() {
 
+    document.title = `Login | Rafael Jesus Saraiva`;
+
     const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

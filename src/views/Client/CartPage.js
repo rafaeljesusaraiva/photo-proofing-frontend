@@ -55,6 +55,8 @@ const JointInput = (props) => {
 
 export function CartPage() {
 
+    document.title = `Carrinho | Rafael Jesus Saraiva`;
+
     let history = useHistory();
     const [alert, setAlert] = useState(null);
     const [imagePreview, setimagePreview] = useState({ show: false, url: null });

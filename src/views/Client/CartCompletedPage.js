@@ -4,6 +4,8 @@ import { NavBar } from "@components";
 
 export function CartCompletedPage(props) {
 
+    document.title = `Encomenda Finalizada | Rafael Jesus Saraiva`;
+
     let history = useHistory();
     const { state } = props.location;
     const orderNumber = (state.orderNumber) ? state.orderNumber : 0;

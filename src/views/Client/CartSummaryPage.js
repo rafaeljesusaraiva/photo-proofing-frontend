@@ -58,6 +58,8 @@ export function CartSummaryPage(props) {
     const { items, cartTotal, emptyCart } = useCart();
     if (items.length === 0) { return <Redirect to="/carrinho"/> }
 
+    document.title = `Resumo Carrinho | Rafael Jesus Saraiva`;
+
     let history = useHistory();
     let currentUser = Authentication.currentUserValue;
     const { state } = props.location;

@@ -8,6 +8,8 @@ import { MiArrowSmall } from "@components/icons"
 
 export function ResetPasswordPage() {
 
+    document.title = `Reset Palavra-passe | Rafael Jesus Saraiva`;
+
     const history = useHistory();
     const { search } = useLocation()
     const values = queryString.parse(search)

@@ -8,6 +8,8 @@ import { isEmail } from "validator";
 
 export function SignupPage() {
 
+    document.title = `Registar | Rafael Jesus Saraiva`;
+
     const history = useHistory();
     // Form Data
     const [name, setName] = useState("");

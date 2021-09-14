@@ -4,6 +4,9 @@ import { AlertBar, Card, NavBar } from "@components";
 import { DateInBetween } from "@utils";
 
 export function IndexPage() {
+
+    document.title = `Início | Rafael Jesus Saraiva`;
+    
     const [alert, setAlert] = useState(null);
     const [albums, setAlbums] = useState([]);
 

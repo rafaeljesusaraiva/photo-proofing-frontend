@@ -8,6 +8,8 @@ import { Timeout } from "@utils";
 
 export function AlbumPage(props) {
 
+    document.title = `A Carregar Prova | Rafael Jesus Saraiva`;
+
     const { id } = useParams();
     const { addItem, inCart, updateItemQuantity, getItem } = useCart();
     const [alert, setAlert] = useState(null);
@@ -60,10 +62,11 @@ export function AlbumPage(props) {
         setImages(currentAlbum.images);
         setOptions(await Api.getPhotoSizes());
         // Check if user is in order date of album
-        const isValid = DateInBetween(album.date_available, (new Date()).toLocaleDateString('pt-PT'), album.date_finalOrder);
+        const isValid = DateInBetween(currentAlbum.date_available, (new Date()).toLocaleDateString('pt-PT'), currentAlbum.date_finalOrder);
         if (!isValid) {
             return <Redirect push to="/" />
         }
+        document.title = `${currentAlbum.title} | Rafael Jesus Saraiva`;
     }, [])
 
     return (

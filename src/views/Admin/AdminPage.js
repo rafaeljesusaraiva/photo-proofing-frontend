@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { AlertBar, Card, NavBar } from "@components";
 
 export function AdminPage() {
+
+    document.title = `Administração | Rafael Jesus Saraiva`;
+
     const [alert, setAlert] = useState();
 
     return (
