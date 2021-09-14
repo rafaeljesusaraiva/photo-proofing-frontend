@@ -6,6 +6,7 @@ export const Api = {
     checkPromotion,
     getAlbums,
     getPhotoSizes,
+    getSelfInformation,
     resetPassword,
     submitCart
 }
@@ -57,6 +58,22 @@ function getPhotoSizes() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/all`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getSelfInformation() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/self`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
