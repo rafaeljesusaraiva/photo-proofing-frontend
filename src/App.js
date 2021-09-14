@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom'
 
 import { AdminRoute, PrivateRoute } from '@components'
 import * as View from '@views'
@@ -26,6 +26,9 @@ function App() {
             
             {/* Private - Admin Routes */}
             <AdminRoute path="/administracao" exact={true} component={View.AdminPage} />
+
+            {/* Route Not Found - Redirects to Index */}
+            <Redirect to="/"/>
         </Switch>
       </BrowserRouter>
     </View.Base>

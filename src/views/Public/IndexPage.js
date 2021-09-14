@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Api } from "@services";
-import { AlertBar, Card, NavBar } from "@components";
+import { Card, NavBar } from "@components";
 import { DateInBetween } from "@utils";
 
 export function IndexPage() {
 
     document.title = `Início | Rafael Jesus Saraiva`;
     
-    const [alert, setAlert] = useState(null);
     const [albums, setAlbums] = useState([]);
-
     useEffect(async ()=>{
         if (albums.length === 0) {
             setAlbums(await Api.getAlbums());
@@ -18,7 +16,7 @@ export function IndexPage() {
 
     return (
         <>
-            <NavBar alertBar={alert}/>
+            <NavBar/>
             <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Trabalhos Disponíveis</h2>
             <div className="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 flex-grow justify-center mx-6 md:mx-auto my-4">
                 {(albums.length === 0) ? (
