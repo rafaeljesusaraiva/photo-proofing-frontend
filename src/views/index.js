@@ -12,6 +12,8 @@ export { AlbumPage } from './Client/AlbumPage';
 export { CartPage } from './Client/CartPage';
 export { CartCompletedPage } from './Client/CartCompletedPage';
 export { CartSummaryPage } from './Client/CartSummaryPage';
+export { OrdersPage } from './Client/OrdersPage';
+export { ProfilePage } from './Client/ProfilePage';
 
 // Admin Pages
 export { AdminPage } from './Admin/AdminPage';
