@@ -2,40 +2,12 @@ import { HandleResponse } from '@utils';
 import { Authentication } from "@services";
 
 export const Api = {
+    changePassword,
+    checkPromotion,
     getAlbums,
     getPhotoSizes,
-    changePassword,
-    resetPassword
-}
-
-function getAlbums() {
-    const requestOptions = {
-        method: 'GET',
-        headers: { 
-            'Content-Type': 'application/json'
-        }
-    };
-
-    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album`, requestOptions)
-        .then(HandleResponse)
-        .then(albums => {
-            return albums.message;
-        });
-}
-
-function getPhotoSizes() {
-    const requestOptions = {
-        method: 'GET',
-        headers: { 
-            'Content-Type': 'application/json'
-        }
-    };
-
-    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/all`, requestOptions)
-        .then(HandleResponse)
-        .then(response => {
-            return response.message;
-        });
+    resetPassword,
+    submitCart
 }
 
 function changePassword(token, password) {
@@ -52,6 +24,45 @@ function changePassword(token, password) {
         });
 }
 
+function checkPromotion(promocode) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/promotion/${promocode}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getAlbums() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getPhotoSizes() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/all`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
 function resetPassword(email) {
     const requestOptions = {
         method: 'POST',
@@ -60,6 +71,24 @@ function resetPassword(email) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/resetPassword`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function submitCart(orderInfo) {
+    // console.log(orderInfo)
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify(orderInfo)
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;

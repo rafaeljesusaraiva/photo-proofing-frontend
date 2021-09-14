@@ -1,9 +1,3 @@
-import { Api } from "./Api/Api.service";
-import { Authentication } from "./Authentication/Authentication.service";
-import { LocalStorage } from "./LocalStorage/LocalStorage.service";
-
-export {
-    Api,
-    Authentication,
-    LocalStorage,
-}
+export { Api } from "./Api/Api.service";
+export { Authentication } from "./Authentication/Authentication.service";
+export { LocalStorage } from "./LocalStorage/LocalStorage.service";
