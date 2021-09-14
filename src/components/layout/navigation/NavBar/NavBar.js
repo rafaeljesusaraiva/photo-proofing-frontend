@@ -60,7 +60,7 @@ export function NavBar(props) {
                                         </li> 
                                         {(currentUser.role === 'admin') ? (
                                             <li>
-                                                <Link to="/admin">Administração</Link>
+                                                <Link to="/administracao">Administração</Link>
                                             </li>
                                         ) : ""}
                                         <li>
