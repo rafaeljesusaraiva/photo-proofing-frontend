@@ -5,6 +5,9 @@ export const Api = {
     changePassword,
     checkPromotion,
     getAlbums,
+    getFinalImage,
+    getOrders,
+    getOrderZip,
     getPhotoSizes,
     getSelfInformation,
     resetPassword,
@@ -45,6 +48,53 @@ function getAlbums() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/album`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getOrderZip(orderID) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/delivery-zipped/${orderID}`, requestOptions)
+        .then(response => {
+            return response.blob();
+        });
+}
+
+function getFinalImage(url, orderID) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token,
+            'order-id': orderID
+        }
+    };
+
+    return fetch(url, requestOptions)
+        .then(response => {
+            return response.blob();
+        });
+}
+
+function getOrders() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;

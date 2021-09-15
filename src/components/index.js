@@ -5,6 +5,7 @@ export { CartTableRow } from './layout/custom/CartTableRow';
 export { CartTableRowSimple } from './layout/custom/CartTableRowSimple';
 export { CookieUsage } from './layout/custom/CookieUsage';
 export { Modal } from './layout/custom/Modal';
+export { OrdersCollapsable } from './layout/custom/OrdersCollapsable';
 // navigation folder
 export { AlertBar } from './layout/navigation/AlertBar/AlertBar';
 export { NavBar } from './layout/navigation/NavBar/NavBar';
