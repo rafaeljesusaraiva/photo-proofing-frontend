@@ -65,6 +65,7 @@ export function CartSummaryPage(props) {
     const { state } = props.location;
     const [imagePreview, setimagePreview] = useState({ show: false, url: null });
     const [alert, setAlert] = useState(null);
+    const [orderNote, setOrderNote] = useState("")
     const promoStatus = (state.promoStatus !== undefined && state.promoStatus !== null) ? state.promoStatus : null;
     const promoCode = (state.promoCode !== undefined && state.promoCode !== null) ? state.promoCode : null;
 
@@ -75,7 +76,8 @@ export function CartSummaryPage(props) {
         let orderInfo = { 
             client: currentUser.id, 
             items: formatItems(items), 
-            promotion: promoStatus ? promoCode : null 
+            promotion: promoStatus ? promoCode : null,
+            note: (orderNote !== "") ? orderNote : null
         }
 
         let order = await Api.submitCart(orderInfo).catch(err => setAlert(<AlertBar status="error" message={err}/>));
@@ -104,6 +106,12 @@ export function CartSummaryPage(props) {
                                 { items.map((cartItem, index) => <CartTableRowSimple key={"item-"+index} info={cartItem} openPreview={openPreview}/>) }
                             </tbody>
                         </table>
+                        <div className="form-control mb-12 md:mb-4">
+                            <label className="label">
+                                <span className="label-text">Notas</span>
+                            </label> 
+                            <textarea className="textarea h-24 textarea-bordered w-50" placeholder="Notas da Encomenda..." onChange={(e)=>setOrderNote(e.target.value)}></textarea>
+                        </div>
                         {promoStatus ? (
                             <JointInput 
                                 inputText={"Total  " + Number((promoStatus.percentage !== null)

@@ -9,10 +9,33 @@ const compressOrderList = (bigList) => {
             currentProduct = element;
             currentProductCount = 1;
             currentProductTotal = element.price;
+            if (bigList.length === 1) {
+                items.push({
+                    previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + currentProduct.albumSlug + '/' + currentProduct.item,
+                    downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + currentProduct.albumSlug + '/' + currentProduct.item,
+                    name: currentProduct.albumTitle,
+                    size: currentProduct.size,
+                    price: currentProductTotal,
+                    quantity: currentProductCount,
+                    imageName: currentProduct.item
+                });
+            }
+            return;
         } 
-        if (element.item === currentProduct.item && element.size === currentProduct.size && bigList.length > 1) {
+        if (element.item === currentProduct.item && element.size === currentProduct.size && bigList.length > 1 && index !== 0) {
             currentProductTotal += currentProduct.price;
             currentProductCount += 1;
+            if (items.length === 0 && index === bigList.length-1) {
+                items.push({
+                    previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + currentProduct.albumSlug + '/' + currentProduct.item,
+                    downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + currentProduct.albumSlug + '/' + currentProduct.item,
+                    name: currentProduct.albumTitle,
+                    size: currentProduct.size,
+                    price: currentProductTotal,
+                    quantity: currentProductCount,
+                    imageName: currentProduct.item
+                });
+            }
             return;
         } 
         items.push({
@@ -28,13 +51,23 @@ const compressOrderList = (bigList) => {
         currentProductTotal = currentProduct.price;
         currentProductCount = 1;
     });
+    console.log(bigList)
     return items;
+}
+
+const countProducts = (products) => {
+    let itemCount = 0;
+    products.forEach(element => {
+        itemCount += element.quantity;
+    });
+    return itemCount;
 }
 
 export function OrdersCollapsable({ orderData, openPreview }) {
 
     const orderNumber = "" + orderData.orderCount;
     const prettyProducts = compressOrderList(orderData.products);
+    const totalItems = countProducts(prettyProducts);
     let currentState = () => {
         let status = orderData.status;
         switch (status) {
@@ -114,8 +147,24 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                             )
                         })}
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th className="text-center">{totalItems}</th>
+                            <th className="text-center hidden md:table-cell">{Number(orderData.totalNoPromotion).toFixed(2) + " €"}</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
                 <button className="btn btn-sm btn-info my-4" onClick={()=>downloadZip(orderData.id)}>Descarregar Imagens</button>
+                <div className="form-control mb-2">
+                    <label className="label">
+                        <span className="label-text font-bold">Notas Encomenda</span>
+                    </label> 
+                    <textarea className="textarea min-h-8 textarea-bordered w-50" placeholder="Nenhuma nota fornecida" disabled={true} value={orderData.note ? orderData.note : ""}></textarea>
+                </div>
             </div>
         </div> 
     );
