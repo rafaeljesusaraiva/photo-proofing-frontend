@@ -51,7 +51,6 @@ const compressOrderList = (bigList) => {
         currentProductTotal = currentProduct.price;
         currentProductCount = 1;
     });
-    console.log(bigList)
     return items;
 }
 
@@ -158,7 +157,20 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                         </tr>
                     </tfoot>
                 </table>
-                <button className="btn btn-sm btn-info my-4" onClick={()=>downloadZip(orderData.id)}>Descarregar Imagens</button>
+                <div className="w-full font-bold my-2 text-right">
+                    {(orderData.promotion !== null) ? (
+                        "Valor Final (c/ desconto):  " + Number((orderData.promotion.discount !== null)
+                                                ? (orderData.totalNoPromotion * (1 - orderData.promotion.discount))
+                                                : (orderData.totalNoPromotion - orderData.promotion.value)
+                                            ).toFixed(2) + " €"
+                    ) : (
+                        "Valor Final:  " + Number(orderData.totalNoPromotion).toFixed(2) + " €"
+                    )}
+                    {console.log(orderData.promotion)}
+                </div>
+                <button className="btn btn-sm btn-info my-4" onClick={()=>downloadZip(orderData.id)}>
+                    Descarregar Imagens
+                </button>
                 <div className="form-control mb-2">
                     <label className="label">
                         <span className="label-text font-bold">Notas Encomenda</span>
