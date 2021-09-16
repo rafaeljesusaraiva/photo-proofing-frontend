@@ -9,7 +9,7 @@ const showLastOrders = (orderList) => {
     orderList.forEach(order => {
         orderListRows.push(
             <tr key={'order#'+order.id}>
-                <th className="text-center">1</th> 
+                <th className="text-center">{order.orderCount.toString().padStart(4, '0')}</th> 
                 <td>{order.client.name}</td> 
                 <td className="hidden sm:table-cell">
                     {
