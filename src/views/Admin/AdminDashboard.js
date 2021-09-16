@@ -8,7 +8,7 @@ const showLastOrders = (orderList) => {
     let orderListRows = [];
     orderList.forEach(order => {
         orderListRows.push(
-            <tr key={'order#'+order.id}>
+            <tr key={'order#'+order.id} className="rounded-lg">
                 <th className="text-center">{order.orderCount.toString().padStart(4, '0')}</th> 
                 <td>{order.client.name}</td> 
                 <td className="hidden sm:table-cell">
@@ -52,55 +52,53 @@ export function AdminDashboard() {
             <NavBar/>
             <AdminBar/>
             <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Administração</h2>
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-3 flex-grow justify-center mx-6 md:mx-0 my-4">
-                {!widgetInfo ? (
-                    <div>A Carregar...</div>
-                ) : (
-                    <>
+            {!widgetInfo ? (
+                <button className="btn btn-circle loading md:col-span-3 w-full"></button>
+            ) : (
+                <>
+                    <div className="grid gap-6 grid-cols-1 md:grid-cols-3 justify-center mx-6 md:mx-0 my-4">
                         {/* Small Widgets */}
-                        <div className="card bordered bg-base-300 p-4">
+                        <div className="card bordered bg-base-300 p-4 h-32">
                             <span className="font-bold">Encomendas</span>
                             <span className="text-xs italic">Esta Semana</span>
                             <div className="p-2 text-4xl font-bold">
                                 {widgetInfo.orderCount}
                             </div>
                         </div>
-                        <div className="card bordered bg-base-300 p-4">
+                        <div className="card bordered bg-base-300 p-4 h-32">
                             <span className="font-bold">Vendas</span>
                             <span className="text-xs italic">Esta Semana</span>
                             <div className="p-2 text-4xl font-bold">
                                 {widgetInfo.sumSales}
                             </div>
                         </div>
-                        <div className="card bordered bg-base-300 p-4">
+                        <div className="card bordered bg-base-300 p-4 h-32">
                             <span className="font-bold">Despesas</span>
                             <span className="text-xs italic">Esta Semana</span>
                             <div className="p-2 text-4xl font-bold">
                                 {widgetInfo.sumExpenses}
                             </div>
                         </div>
-                        {/* Big List Widget */}
-                        <div className="md:col-span-3">
-                            <div className="text-2xl font-bold">
-                                Últimas Encomendas
-                            </div>
-                            <table className="table w-full">
-                                <thead>
-                                    <tr>
-                                        <th className="text-center">#</th> 
-                                        <th>Cliente</th> 
-                                        <th className="hidden sm:table-cell">Total</th> 
-                                        <th></th>
-                                    </tr>
-                                </thead> 
-                                <tbody>
-                                    {showLastOrders(widgetInfo.lastOrders)}
-                                </tbody>
-                            </table>
-                        </div>
-                    </>
-                )}
-            </div>
+                    </div>
+                    {/* Big List Widget */}
+                    <div className="text-2xl font-bold">
+                        Últimas Encomendas
+                    </div>
+                    <table className="table w-full">
+                        <thead>
+                            <tr>
+                                <th className="text-center">#</th> 
+                                <th>Cliente</th> 
+                                <th className="hidden sm:table-cell">Total</th> 
+                                <th></th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {showLastOrders(widgetInfo.lastOrders)}
+                        </tbody>
+                    </table>
+                </>
+            )}
         </>
     );
 }
