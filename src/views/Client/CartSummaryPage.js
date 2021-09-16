@@ -81,7 +81,6 @@ export function CartSummaryPage(props) {
         }
 
         let order = await Api.submitCart(orderInfo).catch(err => setAlert(<AlertBar status="error" message={err}/>));
-        console.log(order)
         if (order && order.status === 'Recebida') {
             emptyCart();
             history.push({

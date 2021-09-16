@@ -11,7 +11,8 @@ export const Api = {
     getPhotoSizes,
     getSelfInformation,
     resetPassword,
-    submitCart
+    submitCart,
+    updatePassword
 }
 
 function changePassword(token, password) {
@@ -145,7 +146,6 @@ function resetPassword(email) {
 }
 
 function submitCart(orderInfo) {
-    // console.log(orderInfo)
     const requestOptions = {
         method: 'PUT',
         headers: { 
@@ -159,5 +159,22 @@ function submitCart(orderInfo) {
         .then(HandleResponse)
         .then(response => {
             return response.message;
+        });
+}
+
+function updatePassword(accountID, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify({ password: password })
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/${accountID}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response;
         });
 }

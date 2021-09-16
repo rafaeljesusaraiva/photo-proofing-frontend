@@ -166,7 +166,6 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                     ) : (
                         "Valor Final:  " + Number(orderData.totalNoPromotion).toFixed(2) + " €"
                     )}
-                    {console.log(orderData.promotion)}
                 </div>
                 <button className="btn btn-sm btn-info my-4" onClick={()=>downloadZip(orderData.id)}>
                     Descarregar Imagens

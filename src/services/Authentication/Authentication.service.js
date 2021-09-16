@@ -82,8 +82,6 @@ function registerUser(name, email, password) {
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/account`, requestOptions)
         .then(HandleResponse)
         .then(user => {
-            console.log(user)
-
             return user;
         });
 }
