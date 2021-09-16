@@ -5,7 +5,7 @@ module.exports = {
     maxHeight: {
       '35v': '35vh',
       '50v': '50vh',
-     }
+    }
   },
   variants: {
     extend: {},

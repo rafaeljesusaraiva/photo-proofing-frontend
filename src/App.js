@@ -28,12 +28,21 @@ function App() {
             <AdminRoute path="/administracao" exact={true} component={View.AdminDashboard} />
             {/*           Admin | Client Routes */}
             <AdminRoute path="/administracao/clientes" exact={true} component={View.AdminClient.Main} />
+            <AdminRoute path="/administracao/clientes/novo" exact={true} component={View.AdminClient.Main} />
+            <AdminRoute path="/administracao/clientes/:clientId" exact={true} component={View.AdminClient.Main} />
             {/*           Admin | Order Routes */}
             <AdminRoute path="/administracao/encomendas" exact={true} component={View.AdminOrder.Main} />
+            <AdminRoute path="/administracao/encomendas/nova" exact={true} component={View.AdminOrder.Main} />
+            <AdminRoute path="/administracao/encomendas/preparar" exact={true} component={View.AdminOrder.Main} />
+            <AdminRoute path="/administracao/encomendas/:orderId" exact={true} component={View.AdminOrder.Main} />
             {/*           Admin | Event Routes */}
             <AdminRoute path="/administracao/eventos" exact={true} component={View.AdminEvent.Main} />
+            <AdminRoute path="/administracao/eventos/novo" exact={true} component={View.AdminEvent.Main} />
+            <AdminRoute path="/administracao/eventos/:albumId" exact={true} component={View.AdminEvent.Main} />
             {/*           Admin | Photo Size Routes */}
             <AdminRoute path="/administracao/impressoes" exact={true} component={View.AdminPhotosize.Main} />
+            <AdminRoute path="/administracao/impressoes/nova" exact={true} component={View.AdminPhotosize.Main} />
+            <AdminRoute path="/administracao/impressoes/:sizeId" exact={true} component={View.AdminPhotosize.Main} />
 
             {/* Route Not Found - Redirects to Index */}
             <Redirect to="/"/>
