@@ -1,6 +1,7 @@
 # Prova Fotografias
 
-Frontend para apresentação e venda de fotografias. (Necessita de API)
+Frontend para apresentação e venda de fotografias.
+Depende deste [API](https://github.com/rafaeljesusaraiva/photo-proofing-api).
 
 ## Instalação
 
