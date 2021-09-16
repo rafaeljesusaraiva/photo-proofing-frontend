@@ -53,7 +53,7 @@ const formatItems = (itemList) => {
     return items;
 }
 
-export function CartSummaryPage(props) {
+export function CartSummary(props) {
 
     const { items, cartTotal, emptyCart } = useCart();
     if (items.length === 0) { return <Redirect to="/carrinho"/> }

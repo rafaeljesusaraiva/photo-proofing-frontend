@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, NavBar, OrdersCollapsable } from "@components";
 import { Api } from "@services";
 
-export function OrdersPage() {
+export function Orders() {
     
     document.title = `Encomendas | Rafael Jesus Saraiva`;
 

@@ -3,7 +3,7 @@ import { Api } from "@services";
 import { Card, NavBar } from "@components";
 import { DateInBetween } from "@utils";
 
-export function IndexPage() {
+export function Index() {
 
     document.title = `Início | Rafael Jesus Saraiva`;
     

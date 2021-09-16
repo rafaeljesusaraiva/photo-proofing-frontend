@@ -4,7 +4,7 @@ import { AlertBar, NavBar } from "@components";
 import { Api } from "@services";
 import { Timeout } from "@utils";
 
-export function ProfilePage() {
+export function Profile() {
 
     document.title = `Perfil | Rafael Jesus Saraiva`;
 

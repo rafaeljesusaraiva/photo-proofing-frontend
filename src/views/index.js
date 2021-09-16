@@ -1,19 +1,25 @@
 export { Base } from './Base';
 
 // Public Pages
-export { IndexPage } from './Public/IndexPage';
-export { LoginPage } from './Public/LoginPage';
-export { SignupPage } from './Public/SignupPage';
-export { ForgotPasswordPage } from './Public/ForgotPasswordPage';
-export { ResetPasswordPage } from './Public/ResetPasswordPage';
+import * as Public from './Public';
+export { Public }
 
 // Client Pages
-export { AlbumPage } from './Client/AlbumPage';
-export { CartPage } from './Client/CartPage';
-export { CartCompletedPage } from './Client/CartCompletedPage';
-export { CartSummaryPage } from './Client/CartSummaryPage';
-export { OrdersPage } from './Client/OrdersPage';
-export { ProfilePage } from './Client/ProfilePage';
+import * as Client from './Client';
+export { Client }
 
 // Admin Pages
-export { AdminPage } from './Admin/AdminPage';
+// - Admin Dashboard
+export { AdminDashboard } from './Admin/AdminDashboard';
+// - Admin Clients
+import * as AdminClient from './Admin/Clients';
+export { AdminClient }
+// - Admin Orders
+import * as AdminOrder from './Admin/Orders';
+export { AdminOrder }
+// - Admin Events
+import * as AdminEvent from './Admin/Events';
+export { AdminEvent }
+// - Admin Photo Sizes
+import * as AdminPhotosize from './Admin/PhotoSizes';
+export { AdminPhotosize }

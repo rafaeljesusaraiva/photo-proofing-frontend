@@ -6,7 +6,7 @@ import { Timeout } from "@utils";
 import { AlertBar, NavBar } from "@components";
 import { MiArrowSmall } from "@components/icons"
 
-export function ResetPasswordPage() {
+export function ResetPassword() {
 
     document.title = `Reset Palavra-passe | Rafael Jesus Saraiva`;
 

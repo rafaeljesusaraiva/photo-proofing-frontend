@@ -5,7 +5,7 @@ import { Api } from "@services";
 import { Timeout } from "@utils";
 import { isEmail } from "validator";
 
-export function ForgotPasswordPage() {
+export function ForgotPassword() {
 
     document.title = `Esqueci-me da Palavra-passe | Rafael Jesus Saraiva`;
 

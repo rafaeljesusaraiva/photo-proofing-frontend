@@ -7,6 +7,7 @@ export { CookieUsage } from './layout/custom/CookieUsage';
 export { Modal } from './layout/custom/Modal';
 export { OrdersCollapsable } from './layout/custom/OrdersCollapsable';
 // navigation folder
+export { AdminBar } from './layout/navigation/AdminBar/AdminBar';
 export { AlertBar } from './layout/navigation/AlertBar/AlertBar';
 export { NavBar } from './layout/navigation/NavBar/NavBar';
 export { FooterBar } from './layout/navigation/FooterBar/FooterBar';

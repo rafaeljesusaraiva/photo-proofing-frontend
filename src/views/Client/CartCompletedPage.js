@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { NavBar } from "@components";
 
-export function CartCompletedPage(props) {
+export function CartCompleted(props) {
 
     document.title = `Encomenda Finalizada | Rafael Jesus Saraiva`;
 

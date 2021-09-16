@@ -6,7 +6,7 @@ import { AlbumCard, AlertBar, NavBar } from "@components";
 import { useCart } from "react-use-cart";
 import { Timeout } from "@utils";
 
-export function AlbumPage(props) {
+export function Album(props) {
 
     document.title = `A Carregar Prova | Rafael Jesus Saraiva`;
 

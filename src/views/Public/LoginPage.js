@@ -6,7 +6,7 @@ import { Authentication } from "@services";
 import { Timeout } from "@utils";
 import { useCart } from "react-use-cart";
 
-export function LoginPage() {
+export function Login() {
 
     document.title = `Login | Rafael Jesus Saraiva`;
 

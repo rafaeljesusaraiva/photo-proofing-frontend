@@ -6,7 +6,7 @@ import { Authentication } from "@services";
 import { Timeout } from "@utils";
 import { isEmail } from "validator";
 
-export function SignupPage() {
+export function Signup() {
 
     document.title = `Registar | Rafael Jesus Saraiva`;
 

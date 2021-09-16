@@ -53,7 +53,7 @@ const JointInput = (props) => {
     );
 }
 
-export function CartPage() {
+export function Cart() {
 
     document.title = `Carrinho | Rafael Jesus Saraiva`;
 
