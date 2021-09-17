@@ -25,7 +25,7 @@ const AccountList = (accountList) => {
                 </td> 
                 <th className="text-center">
                     <Link to={"/administracao/clientes/"+element._id}>
-                        <button className="btn btn-ghost btn-xs">Detalhes</button>
+                        <button className="btn btn-primary btn-xs">Detalhes</button>
                     </Link>
                 </th>
             </tr>
