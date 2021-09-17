@@ -14,13 +14,13 @@ const AccountList = (accountList) => {
                             <div className="font-bold break-words">
                                 {element.name}
                             </div> 
-                            <span className={"badge badge-sm badge-"+(element.role === "admin" ? "primary" : "accent")}>
+                            <span className={"badge select-none badge-sm badge-"+(element.role === "admin" ? "primary" : "accent")}>
                                 {element.role === "admin" ? "Administrador" : "Cliente"}
                             </span>
                         </div>
                     </div>
                 </td> 
-                <td className="hidden sm:table-cell">
+                <td className="hidden sm:table-cell select-none">
                     {element.numberOfOrders} Encomendas
                 </td> 
                 <th className="text-center">
@@ -51,11 +51,8 @@ export function Main(){
             <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Administração</h2>
             <div className="overflow-x-hidden flex-grow w-full md:mx-auto my-4">
                 <div className="overflow-x-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-5 mb-4">
-                        <div className="text-xl font-bold md:col-span-4 m-4 md:m-0">
-                            Lista Clientes
-                        </div>
-                        <button className="btn btn-primary btn-sm m-4 md:m-0">Adicionar Cliente</button> 
+                    <div className="text-xl font-bold mb-4 select-none">
+                        Lista Clientes
                     </div>
                     <div className="overflow-x-auto">
                         { !accountList ? (
@@ -64,8 +61,8 @@ export function Main(){
                             <table className="table w-full">
                                 <thead>
                                 <tr>
-                                    <th>Nome</th> 
-                                    <th className="hidden sm:table-cell"></th> 
+                                    <th className="select-none">Nome</th> 
+                                    <th className="hidden sm:table-cell select-none"></th> 
                                     <th></th>
                                 </tr>
                                 </thead> 

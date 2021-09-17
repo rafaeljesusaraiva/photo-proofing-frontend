@@ -29,7 +29,7 @@ function App() {
             {/*           Admin | Client Routes */}
             <AdminRoute path="/administracao/clientes" exact={true} component={View.AdminClient.Main} />
             <AdminRoute path="/administracao/clientes/novo" exact={true} component={View.AdminClient.Main} />
-            <AdminRoute path="/administracao/clientes/:clientId" exact={true} component={View.AdminClient.Main} />
+            <AdminRoute path="/administracao/clientes/:clientId" exact={true} component={View.AdminClient.ShowOne} />
             {/*           Admin | Order Routes */}
             <AdminRoute path="/administracao/encomendas" exact={true} component={View.AdminOrder.Main} />
             <AdminRoute path="/administracao/encomendas/nova" exact={true} component={View.AdminOrder.Main} />
