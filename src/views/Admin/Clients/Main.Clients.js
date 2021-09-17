@@ -1,9 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AdminBar, NavBar } from "@components";
+import { AdminApi } from "@services";
+
+const AccountList = (accountList) => {
+    let componentList = [];
+    accountList.forEach((element, index) => {
+        componentList.push(
+            <tr key={index}>
+                <td>
+                    <div className="flex items-center space-x-3">
+                        <div>
+                            <div className="font-bold break-words">
+                                {element.name}
+                            </div> 
+                            <span className={"badge badge-sm badge-"+(element.role === "admin" ? "primary" : "accent")}>
+                                {element.role === "admin" ? "Administrador" : "Cliente"}
+                            </span>
+                        </div>
+                    </div>
+                </td> 
+                <td className="hidden sm:table-cell">
+                    {element.numberOfOrders} Encomendas
+                </td> 
+                <th className="text-center">
+                    <Link to={"/administracao/clientes/"+element._id}>
+                        <button className="btn btn-ghost btn-xs">Detalhes</button>
+                    </Link>
+                </th>
+            </tr>
+        )
+    });
+    return componentList;
+}
 
 export function Main(){
 
     document.title = `Clientes - Administração | Rafael Jesus Saraiva`;
+
+    const [accountList, setAccountList] = useState(null);
+
+    useEffect(async ()=>{
+        setAccountList(await AdminApi.getAllClients());
+    }, [])
 
     return (
         <>
@@ -18,42 +57,24 @@ export function Main(){
                         </div>
                         <button className="btn btn-primary btn-sm m-4 md:m-0">Adicionar Cliente</button> 
                     </div>
-                    <table className="table w-full">
-                        <thead>
-                        <tr>
-                            <th></th> 
-                            <th>Name</th> 
-                            <th>Job</th> 
-                            <th>Favorite Color</th>
-                        </tr>
-                        </thead> 
-                        <tbody>
-                            <tr>
-                                <th>1</th> 
-                                <td>Cy Ganderton</td> 
-                                <td>Quality Control Specialist</td> 
-                                <td>Blue</td>
-                            </tr>
-                            <tr>
-                                <th>2</th> 
-                                <td>Hart Hagerty</td> 
-                                <td>Desktop Support Technician</td> 
-                                <td>Purple</td>
-                            </tr>
-                            <tr>
-                                <th>3</th> 
-                                <td>Brice Swyre</td> 
-                                <td>Tax Accountant</td> 
-                                <td>Red</td>
-                            </tr>
-                            <tr>
-                                <th>4</th> 
-                                <td>Marjy Ferencz</td> 
-                                <td>Office Assistant I</td> 
-                                <td>Crimson</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div className="overflow-x-auto">
+                        { !accountList ? (
+                            <button className="btn btn-circle loading md:col-span-3 w-full"></button>
+                        ) : (
+                            <table className="table w-full">
+                                <thead>
+                                <tr>
+                                    <th>Nome</th> 
+                                    <th className="hidden sm:table-cell"></th> 
+                                    <th></th>
+                                </tr>
+                                </thead> 
+                                <tbody>
+                                    {AccountList(accountList)}
+                                </tbody> 
+                            </table>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
