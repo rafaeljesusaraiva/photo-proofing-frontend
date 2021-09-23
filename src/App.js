@@ -34,7 +34,7 @@ function App() {
             <AdminRoute path="/administracao/encomendas" exact={true} component={View.AdminOrder.Main} />
             <AdminRoute path="/administracao/encomendas/nova" exact={true} component={View.AdminOrder.Main} />
             <AdminRoute path="/administracao/encomendas/preparar" exact={true} component={View.AdminOrder.Main} />
-            <AdminRoute path="/administracao/encomendas/:orderId" exact={true} component={View.AdminOrder.Main} />
+            <AdminRoute path="/administracao/encomendas/:orderId" exact={true} component={View.AdminOrder.ShowOne} />
             {/*           Admin | Event Routes */}
             <AdminRoute path="/administracao/eventos" exact={true} component={View.AdminEvent.Main} />
             <AdminRoute path="/administracao/eventos/novo" exact={true} component={View.AdminEvent.Main} />

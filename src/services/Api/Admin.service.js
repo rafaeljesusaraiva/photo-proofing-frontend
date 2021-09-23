@@ -5,7 +5,9 @@ export const AdminApi = {
     getAllClients,
     getAllOrders,
     getOneClient,
+    getOneOrder,
     getWidgetInfo,
+    updateOrderStatus,
     updateUserPrivilege
 }
 
@@ -57,6 +59,22 @@ function getOneClient(id) {
         });
 }
 
+function getOneOrder(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/${id}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
 function getWidgetInfo() {
     const requestOptions = {
         method: 'GET',
@@ -67,6 +85,23 @@ function getWidgetInfo() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/stats`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function updateOrderStatus(id, status) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify({ orderStatus: status })
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/${id}`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
