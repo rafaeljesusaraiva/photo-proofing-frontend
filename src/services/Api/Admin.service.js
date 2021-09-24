@@ -2,15 +2,35 @@ import { HandleResponse } from '@utils';
 import { Authentication } from "@services";
 
 export const AdminApi = {
+    createEvent,
     getAllClients,
+    getAllEvents,
     getAllOrders,
     getAllPhotoSizes,
     getOneClient,
+    getOneEvent,
     getOneOrder,
     getOneSize,
     getWidgetInfo,
     updateOrderStatus,
     updateUserPrivilege
+}
+
+function createEvent(formData) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 
+            // 'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: formData
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
 }
 
 function getAllClients() {
@@ -23,6 +43,22 @@ function getAllClients() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/all`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getAllEvents() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album/all`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
@@ -71,6 +107,22 @@ function getOneClient(id) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/${id}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getOneEvent(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album/${id}`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;

@@ -35,7 +35,7 @@ export function ResetPassword() {
                 });
             setInputLoading(false);
             await Timeout(3000);
-            // history.push('/login')
+            history.push('/login')
         }
     }
 
