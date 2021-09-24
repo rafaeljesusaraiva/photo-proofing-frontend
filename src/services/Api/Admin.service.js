@@ -4,8 +4,10 @@ import { Authentication } from "@services";
 export const AdminApi = {
     getAllClients,
     getAllOrders,
+    getAllPhotoSizes,
     getOneClient,
     getOneOrder,
+    getOneSize,
     getWidgetInfo,
     updateOrderStatus,
     updateUserPrivilege
@@ -43,6 +45,22 @@ function getAllOrders() {
         });
 }
 
+function getAllPhotoSizes() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/all_admin`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
 function getOneClient(id) {
     const requestOptions = {
         method: 'GET',
@@ -69,6 +87,22 @@ function getOneOrder(id) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/${id}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function getOneSize(id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/${id}`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
