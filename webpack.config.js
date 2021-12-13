@@ -29,6 +29,11 @@ module.exports = {
     // tell webpack to transpile javascript files using babel before bundling
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                enforce: 'pre',
+                use: ['source-map-loader'],
+            },
             // import CSS files
             {
                 test: /\.css$/i,

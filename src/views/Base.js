@@ -7,7 +7,7 @@ export function Base(props) {
     return (
         <CookiesProvider>
             <CartProvider>
-                <div className="md:p-10 md:pb-0 flex flex-col min-h-screen justify-between bg-base-200 relative">
+                <div className="md:p-10 md:pb-0 flex flex-col min-h-screen justify-start bg-base-200 relative">
                     {props.children}
                     <CookieUsage/>
                     <FooterBar/>

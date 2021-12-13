@@ -41,7 +41,7 @@ function App() {
             <AdminRoute path="/administracao/eventos/:albumId" exact={true} component={View.AdminEvent.Main} />
             {/*           Admin | Photo Size Routes */}
             <AdminRoute path="/administracao/impressoes" exact={true} component={View.AdminPhotosize.Main} />
-            <AdminRoute path="/administracao/impressoes/nova" exact={true} component={View.AdminPhotosize.Main} />
+            <AdminRoute path="/administracao/impressoes/nova" exact={true} component={View.AdminPhotosize.NewSize} />
             <AdminRoute path="/administracao/impressoes/:sizeId" exact={true} component={View.AdminPhotosize.ShowOne} />
 
             {/* Route Not Found - Redirects to Index */}

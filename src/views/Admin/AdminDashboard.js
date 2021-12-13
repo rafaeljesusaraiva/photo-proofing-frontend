@@ -51,12 +51,12 @@ export function AdminDashboard() {
         <>
             <NavBar/>
             <AdminBar/>
-            <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Administração</h2>
+            <h2 className="shrink text-4xl mx-6 md:mx-0 my-4 select-none">Administração</h2>
             {!widgetInfo ? (
                 <button className="btn btn-circle loading md:col-span-3 w-full"></button>
             ) : (
                 <>
-                    <div className="grid gap-6 grid-cols-1 md:grid-cols-3 justify-center mx-6 md:mx-0 my-4">
+                    <div className="grid gap-6 grid-cols-1 md:grid-cols-3 justify-center shrink mx-6 md:mx-0 my-4">
                         {/* Small Widgets */}
                         <div className="card bordered bg-base-300 p-4 h-32">
                             <span className="font-bold">Encomendas</span>
@@ -81,10 +81,10 @@ export function AdminDashboard() {
                         </div>
                     </div>
                     {/* Big List Widget */}
-                    <div className="text-2xl font-bold">
+                    <div className="text-2xl font-bold shrink">
                         Últimas Encomendas
                     </div>
-                    <table className="table w-full">
+                    <table className="table w-full grow">
                         <thead>
                             <tr>
                                 <th className="text-center">#</th> 

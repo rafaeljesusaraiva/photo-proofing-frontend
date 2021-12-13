@@ -29,6 +29,7 @@
     "react-scripts": "4.0.3",
     "react-use-cart": "^1.11.2",
     "rxjs": "^7.3.0",
+    "source-map-loader": "^3.0.0",
     "style-loader": "^3.2.1",
     "tailwindcss": "^2.2.15",
     "validator": "^13.6.0",

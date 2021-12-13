@@ -3,6 +3,8 @@ import { Authentication } from "@services";
 
 export const AdminApi = {
     createEvent,
+    createSize,
+    deleteSize,
     getAllClients,
     getAllEvents,
     getAllOrders,
@@ -27,6 +29,39 @@ function createEvent(formData) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/album`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function createSize(input) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify(input)
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function deleteSize(sizeID) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size/`+sizeID, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
