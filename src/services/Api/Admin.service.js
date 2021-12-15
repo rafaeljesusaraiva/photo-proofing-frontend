@@ -14,6 +14,8 @@ export const AdminApi = {
     getOneOrder,
     getOneSize,
     getWidgetInfo,
+    putImage,
+    updateEvent,
     updateOrderStatus,
     updateUserPrivilege
 }
@@ -206,6 +208,40 @@ function getWidgetInfo() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/stats`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function putImage(formData) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 
+            // 'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: formData
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function updateEvent(albumId, data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify(data)
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album/${albumId}`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
