@@ -66,6 +66,9 @@ module.exports = {
         }]
     },
     devServer: {
+        allowedHosts: [
+            'provas.rafaeljesusaraiva.pt'
+        ],
         historyApiFallback: true,
     },
     // This will take the /public/index.html, inject script tag to it and move that HTML file to the dist folder
