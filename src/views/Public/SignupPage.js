@@ -33,9 +33,7 @@ export function Signup() {
     }
 
     const addPhoneDashes = (event) => {
-        if (event.key != 'Backspace' && (event.target.value.length === 3 || event.target.value.length === 7)){
-            event.target.value += '-';
-        }
+        
     }
 
     const notEmpty = (variable) => { 
