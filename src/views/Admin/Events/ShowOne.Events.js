@@ -14,7 +14,7 @@ const ShowImages = (slug, full_images, watermarked) => {
                 <td className="text-center">
                     <div className="relative max-w-full mx-4 my-2 gap-6 grid grid-cols-3 items-center">
                         <div className="flex flex-col items-center">
-                            <img src={`${apiDomain}/public/album/${slug}/${watermarked[index].filename}`} id="watermark"/>
+                            <img src={`${apiDomain}/public/album/${slug}/${watermarked[index].filename}`} id="watermark" className="mb-2"/>
                             <div className="badge"><span className="select-none mr-2">W:</span>{watermarked[index].filename}</div> 
                             <div className="badge"><span className="select-none mr-2">O:</span>{image.filename}</div> 
                         </div>

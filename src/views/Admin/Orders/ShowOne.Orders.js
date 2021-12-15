@@ -111,7 +111,7 @@ export function ShowOne(props) {
                                         <label className="label">
                                             <span className="label-text">Notas</span>
                                         </label> 
-                                        <textarea className="textarea h-24 textarea-bordered w-50" defaultValue={orderInfo.note ? OrderInfo.note : "Nenhuma Nota"}></textarea>
+                                        <textarea className="textarea h-24 textarea-bordered w-50" defaultValue={orderInfo.note ? orderInfo.note : "Nenhuma Nota"}></textarea>
                                     </div>
                                     <div className="collapse border rounded-box border-base-300 collapse-arrow col-span-1 md:col-span-2 w-full">
                                         <input type="checkbox"/> 
