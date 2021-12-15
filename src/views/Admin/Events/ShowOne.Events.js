@@ -5,9 +5,16 @@ import { AdminApi } from "@services";
 import { Timeout } from "@utils";
 import dayjs from "dayjs";
 
-const ShowImages = (slug, full_images, watermarked) => {
+const ShowImages = (slug, full_images, watermarked, deleteImage) => {
     let allItems = [];
     let apiDomain = process.env.REACT_APP_DATABASE_URL;
+
+    const openImage = async (url) => {
+        let image = await AdminApi.getOneImage(url)
+        console.log(image)
+        window.open(image)
+    }
+
     full_images.forEach((image, index) => {
         allItems.push(
             <tr key={index} className="hover">
@@ -18,8 +25,8 @@ const ShowImages = (slug, full_images, watermarked) => {
                             <div className="badge"><span className="select-none mr-2">W:</span>{watermarked[index].filename}</div> 
                             <div className="badge"><span className="select-none mr-2">O:</span>{image.filename}</div> 
                         </div>
-                        <a className="btn btn-primary btn-sm mx-4" target='_blank' href={`${apiDomain}/delivery/${slug}/${image.filename}`}>Original</a>
-                        <div className="btn btn-error btn-sm" >X</div>
+                        <div className="btn btn-primary btn-sm mx-4" onClick={()=>{ openImage(`${apiDomain}/delivery/${slug}/${image.filename}`) }}>Original</div>
+                        <div className="btn btn-error btn-sm" onClick={()=>{ deleteImage(image._id, watermarked[index]._id) }}>X</div>
                     </div>
                 </td> 
             </tr>
@@ -139,7 +146,20 @@ export function ShowOne(props) {
                     .catch(err => setAlert(<AlertBar status="error" message={err}/>));
     }
 
-    console.log(eventInfo)
+    // Function to Delete Images
+    const deleteImages = async (imgID, watID) => {
+        await AdminApi.deleteImage(imgID)
+                    .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+        await AdminApi.deleteImage(watID)
+                    .then(async data => {
+                        setAlert(<AlertBar status="success" message="Fotografias apagadas com sucesso!"/>);
+                        console.log(data)
+                        await Timeout(1000);
+                        // Refresh page
+                        window.location.reload(false);
+                    })
+                    .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+    }
 
     useEffect(async () => setEventInfo(await AdminApi.getOneEvent(albumId)), [])
 
@@ -181,12 +201,15 @@ export function ShowOne(props) {
                                         <div className="collapse border rounded-box border-base-300 collapse-arrow col-span-1 md:col-span-2 w-full">
                                             <input type="checkbox"/> 
                                             <div className="collapse-title text-xl font-medium">
-                                                ({eventInfo.totalImages}) Fotografias
+                                                ({eventInfo.totalImages}) Fotografias 
+                                                <div className="badge badge-warning ml-4">
+                                                    Não apagar fotografias já encomendadas!
+                                                </div>
                                             </div> 
                                             <div className="collapse-content"> 
                                                 <table className="table w-full table-compact">
                                                     <tbody>
-                                                        {ShowImages(eventInfo.slug, eventInfo.images, eventInfo.watermarked)}
+                                                        {ShowImages(eventInfo.slug, eventInfo.images, eventInfo.watermarked, deleteImages)}
                                                     </tbody>
                                                 </table>
                                             </div>

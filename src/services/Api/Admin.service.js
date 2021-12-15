@@ -4,6 +4,7 @@ import { Authentication } from "@services";
 export const AdminApi = {
     createEvent,
     createSize,
+    deleteImage,
     deleteSize,
     getAllClients,
     getAllEvents,
@@ -11,6 +12,7 @@ export const AdminApi = {
     getAllPhotoSizes,
     getOneClient,
     getOneEvent,
+    getOneImage,
     getOneOrder,
     getOneSize,
     getWidgetInfo,
@@ -48,6 +50,22 @@ function createSize(input) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function deleteImage(imageID) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo/`+imageID, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
@@ -163,6 +181,23 @@ function getOneEvent(id) {
         .then(HandleResponse)
         .then(response => {
             return response.message;
+        });
+}
+
+function getOneImage(url) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(url, requestOptions)
+        .then(response => response.blob())
+        .then(imageBlob => {
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            return imageObjectURL;
         });
 }
 
