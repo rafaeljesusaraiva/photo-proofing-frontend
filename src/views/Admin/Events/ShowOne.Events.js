@@ -5,13 +5,23 @@ import { AdminApi } from "@services";
 import { Timeout } from "@utils";
 import dayjs from "dayjs";
 
-const ShowImages = (showList) => {
+const ShowImages = (slug, full_images, watermarked) => {
     let allItems = [];
-    showList.forEach((element, index) => {
+    let apiDomain = process.env.REACT_APP_DATABASE_URL;
+    full_images.forEach((image, index) => {
         allItems.push(
             <tr key={index} className="hover">
-                <td className="text-center">{'> '}</td> 
-                <td className="text-center">{"€ cada"}</td> 
+                <td className="text-center">
+                    <div className="relative max-w-full mx-4 my-2 gap-6 grid grid-cols-3 items-center">
+                        <div className="flex flex-col items-center">
+                            <img src={`${apiDomain}/public/album/${slug}/${watermarked[index].filename}`} id="watermark"/>
+                            <div className="badge"><span className="select-none mr-2">W:</span>{watermarked[index].filename}</div> 
+                            <div className="badge"><span className="select-none mr-2">O:</span>{image.filename}</div> 
+                        </div>
+                        <a className="btn btn-primary btn-sm mx-4" target='_blank' href={`${apiDomain}/delivery/${slug}/${image.filename}`}>Original</a>
+                        <div className="btn btn-error btn-sm" >X</div>
+                    </div>
+                </td> 
             </tr>
         )
     });
@@ -129,6 +139,8 @@ export function ShowOne(props) {
                     .catch(err => setAlert(<AlertBar status="error" message={err}/>));
     }
 
+    console.log(eventInfo)
+
     useEffect(async () => setEventInfo(await AdminApi.getOneEvent(albumId)), [])
 
     return (
@@ -174,7 +186,7 @@ export function ShowOne(props) {
                                             <div className="collapse-content"> 
                                                 <table className="table w-full table-compact">
                                                     <tbody>
-                                                        {ShowImages(eventInfo.images)}
+                                                        {ShowImages(eventInfo.slug, eventInfo.images, eventInfo.watermarked)}
                                                     </tbody>
                                                 </table>
                                             </div>
