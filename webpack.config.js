@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     // aliases for importing
     resolve: {
         extensions: ['.js', '.ts'],
