@@ -12,6 +12,24 @@ export function Profile() {
     const [userInfo, setUserInfo] = useState([]);
     const [alert, setAlert] = useState(null);
 
+    const [newName, setNewName] = useState(null);
+    const [newEmail, setNewEmail] = useState(null);
+    const [newPhone, setNewPhone] = useState(null);
+    const updatePersonal = () => {
+        if (newName === null && newEmail === null && newPhone === null) return;
+
+        let data = {};
+        if (newName !== null) data.name = newName;
+        if (newEmail !== null) data.email = newEmail;
+        if (newPhone !== null) data.phoneNumber = newPhone;
+
+        const timeOutId = setTimeout(async () => await sendPersonal(data), 2000);
+        return () => clearTimeout(timeOutId);
+    }
+    const sendPersonal = async (data) => {
+        await Api.updateProfile(userInfo.id, data)
+    }
+
     const [password1, setPassword1] = useState(false);
     const [password2, setPassword2] = useState(false);
     const [difPasswords, setDifPasswords] = useState(false);
@@ -41,7 +59,8 @@ export function Profile() {
         if (userInfo.length === 0) {
             setUserInfo(await Api.getSelfInformation())
         }
-    }, [])
+        updatePersonal();
+    }, [newName, newEmail, newPhone])
 
     return (
         <>
@@ -49,7 +68,7 @@ export function Profile() {
             <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Perfil</h2>
             <div className="overflow-x-hidden flex-grow w-full md:mx-auto my-4">
                 <div className="my-4 mb-16 bg-base-300 p-4 rounded-lg">
-                    <div className="w-full text-xl">Os Meus Dados</div>
+                    <div className="w-full text-xl">Os Meus Dados <div className="badge badge-info ml-4">Novos dados atualizam automáticamente após 2s.</div> </div>
                     <div className="grid gap-6 grid-cols-1 md:grid-cols-2 flex-grow justify-center mx-6 md:mx-auto my-4">
                         {(userInfo.length === 0) ? (
                             <>
@@ -61,15 +80,15 @@ export function Profile() {
                             <>
                                 <div className="flex space-x-2">
                                     <button tabIndex="-1" className="btn btn-primary bg-primary-focus border-0 no-animation disabled cursor-default">Nome</button>
-                                    <input tabIndex="-1" type="text" disabled={true} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.name}/> 
+                                    <input tabIndex="-1" type="text" onChange={(evt)=>setNewName(evt.target.value)} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.name}/> 
                                 </div>
                                 <div className="flex space-x-2">
                                     <button tabIndex="-1" className="btn btn-primary bg-primary-focus border-0 no-animation disabled cursor-default">Telemóvel</button>
-                                    <input tabIndex="-1" type="text" disabled={true} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.phoneNumber}/> 
+                                    <input tabIndex="-1" type="text" onChange={(evt)=>setNewPhone(evt.target.value)} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.phoneNumber}/> 
                                 </div>
                                 <div className="flex space-x-2">
                                     <button tabIndex="-1" className="btn btn-primary bg-primary-focus border-0 no-animation disabled cursor-default">Email</button>
-                                    <input tabIndex="-1" type="text" disabled={true} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.email}/> 
+                                    <input tabIndex="-1" type="text" onChange={(evt)=>setNewEmail(evt.target.value)} className="w-full input input-bordered focus:shadow-none" defaultValue={userInfo.email}/> 
                                 </div>
                             </>
                         )}
