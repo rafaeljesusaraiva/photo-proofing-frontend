@@ -15,6 +15,7 @@ export function Signup() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
     // Warnings
     const [errorCss, setErrorCss] = useState('');
@@ -23,6 +24,7 @@ export function Signup() {
 
     const onChangeName = (event) => { setName(event.target.value); };
     const onChangeEmail = (event) => { setEmail(event.target.value); };
+    const onChangePhoneNumber = (event) => { setPhoneNumber(event.target.value); };
     const onChangePassword = (event) => { setPassword(event.target.value); };
 
     let currentUser = Authentication.currentUserValue;
@@ -30,12 +32,25 @@ export function Signup() {
         return <Redirect push to="/" />
     }
 
+    const addPhoneDashes = (event) => {
+        if (event.key != 'Backspace' && (event.target.value.length === 3 || event.target.value.length === 7)){
+            event.target.value += '-';
+        }
+    }
+
+    const notEmpty = (variable) => { 
+        if (variable === null && variable === "") {
+            return false;
+        }
+        return true;
+    }
+
     const handleSignup = async (e) => {
         e.preventDefault();
-        if (emailValid) {
+        if (emailValid && notEmpty(name) && notEmpty(phoneNumber) && notEmpty(password)) {
             setInputLoading(true);
             await Timeout(750);
-            let newUser = await Authentication.registerUser(name, email, password)
+            let newUser = await Authentication.registerUser(name, email, phoneNumber, password)
                 .then(user => { return user; })
                 .catch(error => {
                     setAlert(<AlertBar status="error" message={error}/>);
@@ -80,6 +95,11 @@ export function Signup() {
                     <div className="form-control w-full py-4">
                         <div className="flex">
                             <input type="email" placeholder="Email" className={"w-full input bg-base-200 "+errorCss+(!emailValid ? "input-error " : "")} onChange={onChangeEmail}/>
+                        </div>
+                    </div>
+                    <div className="form-control w-full py-4">
+                        <div className="flex">
+                            <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" maxLength={11} placeholder="Telemóvel (ex. 961-246-859)" className={"w-full input bg-base-200 "+errorCss} onChange={onChangePhoneNumber} onKeyUp={addPhoneDashes}/>
                         </div>
                     </div>
                     <div className="form-control w-full pt-4 pb-2">
