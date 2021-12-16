@@ -98,8 +98,8 @@ export function ShowOne(props) {
                                         </label> 
                                         <select className="select select-bordered" defaultValue={orderInfo.status} onChange={(e)=>handleOrderStatus(e)}>
                                             <option value="Cancelada">Cancelada</option> 
-                                            <option value="Recebida">Recebida</option> 
-                                            <option value="Por Pagar">Por Pagar</option> 
+                                            <option value="Recebida - Por Pagar">Recebida - Por Pagar</option> 
+                                            <option value="Paga">Paga</option> 
                                             <option value="A Processar">A Processar</option> 
                                             <option value="Em Entrega">Em Entrega</option> 
                                             <option value="Entregue">Entregue</option> 
