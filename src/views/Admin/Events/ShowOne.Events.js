@@ -121,29 +121,30 @@ export function ShowOne(props) {
         const uploadInfoF = new FormData();
         uploadInfoF.append("albumId", eventInfo._id);
         uploadInfoF.append("watermark", 'false');
+
         for (let i = 0 ; i < newPhotoF.length ; i++) {
             uploadInfoF.append("images", newPhotoF[i]);
         }
+
+        const returnImageF = await AdminApi.putImage(uploadInfoF)
+                                            .catch(err => setAlert(<AlertBar status="error" message={err}/>));
 
         // Upload Watermarked Images
         const uploadInfoW = new FormData();
         uploadInfoW.append("albumId", eventInfo._id);
         uploadInfoW.append("watermark", 'true');
+
         for (let i = 0 ; i < newPhotoW.length ; i++) {
             uploadInfoW.append("images", newPhotoW[i]);
         }
 
-        await AdminApi.putImage(uploadInfoF)
-                    .catch(err => setAlert(<AlertBar status="error" message={err}/>));
-        await AdminApi.putImage(uploadInfoW)
-                    .then(async data => {
-                        setAlert(<AlertBar status="success" message="Fotografias guardadas com sucesso!"/>);
-                        console.log(data)
-                        await Timeout(1000);
-                        // Refresh page
-                        window.location.reload(false);
-                    })
-                    .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+        const returnImageW = await AdminApi.putImage(uploadInfoW)
+                                            .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+
+        // Refresh Page
+        setAlert(<AlertBar status="success" message="Fotografias guardadas com sucesso!"/>);
+        await Timeout(1000);
+        window.location.reload(false);
     }
 
     // Function to Delete Images

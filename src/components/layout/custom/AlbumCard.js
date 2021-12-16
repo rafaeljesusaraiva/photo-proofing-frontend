@@ -17,7 +17,7 @@ export function AlbumCard(props) {
     }
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="break-inside flex items-center justify-center">
             <div className=" w-80 bg-base-300 rounded-xl overflow-hidden shadow-lg">
                 <img src={image.url}/>
                 <div className="p-4">

@@ -5,12 +5,12 @@ export function Card(props) {
     const cardInfo = props.info;
     return (
         <ConditionalLink to={cardInfo.url} valid={props.valid}>
-            <div className={"card shadow-xl cursor-pointer md:transform hover:translate-x-1 hover:-translate-y-1 transition-transform duration-250 ease-out"+props.className}>
+            <div className={"relative card shadow-xl cursor-pointer md:transform hover:translate-x-1 hover:-translate-y-1 transition-transform duration-250 ease-out"+props.className}>
                 <figure>
                     <img src={cardInfo.cover}/>
                 </figure> 
-                <div className="justify-end card-body p-4 bg-base-300 h-full">
-                    <h2 className="card-title select-none">{cardInfo.name}</h2> 
+                <div className="absolute bottom-0 left-0 card-body p-2 px-4 bg-black/75 w-full">
+                    <h2 className="card-title select-none mb-0">{cardInfo.name}</h2> 
                 </div>
             </div> 
         </ConditionalLink>
