@@ -2,6 +2,9 @@
 const path = require('path');
 // used to inject webpack as a script tag to the HTML file
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // used to add .env file
 const Dotenv = require('dotenv-webpack');
 
@@ -24,7 +27,8 @@ module.exports = {
     // create the final bundled file in dist folder in the root of the project
     output: {
         path:path.resolve(__dirname, "dist"),
-        publicPath: '/'
+        publicPath: '/',
+        filename: '[name].[contenthash].js'
     },
     // tell webpack to transpile javascript files using babel before bundling
     module: {
@@ -73,9 +77,40 @@ module.exports = {
     },
     // This will take the /public/index.html, inject script tag to it and move that HTML file to the dist folder
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           template: path.join(__dirname, "public", "index.html"),
         }),
-        new Dotenv()
+        new Dotenv(),
+        // new BundleAnalyzerPlugin()
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            minSize: 20000,
+            minRemainingSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 30,
+            maxInitialRequests: 30,
+            enforceSizeThreshold: 50000
+        },
+        minimizer: [
+            new OptimizeCssAssetsPlugin({
+                cssProcessorOptions: {
+                    map: {
+                        inline: false,
+                        annotation: true,
+                    },
+                },
+            }),
+            (compiler) => {
+                const TerserPlugin = require('terser-webpack-plugin');
+                new TerserPlugin({
+                  terserOptions: {
+                    compress: {},
+                  }
+                }).apply(compiler);
+            },
+        ],
+    },
 }
