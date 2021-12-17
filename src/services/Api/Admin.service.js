@@ -16,6 +16,7 @@ export const AdminApi = {
     getOneOrder,
     getOneSize,
     getWidgetInfo,
+    processOrders,
     putImage,
     updateEvent,
     updateOrderStatus,
@@ -247,6 +248,32 @@ function getWidgetInfo() {
         .then(response => {
             return response.message;
         });
+}
+
+function processOrders() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`http://localhost:8081/order/process_orders`, requestOptions)
+            .then(async res => {
+                var filename = "";
+                var disposition = res.headers.get('Content-Disposition');
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) { 
+                    filename = matches[1].replace(/['"]/g, '');
+                }
+                return {
+                    response: await res.blob(), 
+                    filename: filename
+                }
+            })
+            .catch((e) => {console.log(e)})
 }
 
 function putImage(formData) {
