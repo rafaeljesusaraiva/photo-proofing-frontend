@@ -20,7 +20,7 @@ const OrderRow = (props) => {
     let currentState = () => {
         let status = element.status;
         switch (status) {
-            case 'Por Pagar':
+            case 'Paga':
                 return (<div className="badge badge-primary">{status}</div>);
             case 'A Processar':
                 return (<div className="badge badge-accent">{status}</div>);
@@ -32,7 +32,7 @@ const OrderRow = (props) => {
                 return (<div className="badge badge-error">{status}</div>);
             
             default:
-                return (<div className="badge">Recebida</div>);
+                return (<div className="badge">Recebida - Por Pagar</div>);
         } 
     }
 
