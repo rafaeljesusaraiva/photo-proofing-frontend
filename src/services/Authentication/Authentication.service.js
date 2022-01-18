@@ -61,15 +61,17 @@ function logout(cartJson) {
         body: JSON.stringify({ cartJson })
     };
 
-    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/updateCart`, requestOptions)
+    let usrRtrn = fetch(`${process.env.REACT_APP_DATABASE_URL}/account/updateCart`, requestOptions)
         .then(HandleResponse)
         .then(user => {
-            // remove user from local storage to log user out
-            localStorage.removeItem('currentUser');
-            currentUserSubject.next(null);
-
             return user;
         });
+
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    currentUserSubject.next(null);
+
+    return usrRtrn;
 }
 
 function registerUser(name, email, password) {

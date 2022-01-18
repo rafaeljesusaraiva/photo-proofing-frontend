@@ -24,7 +24,8 @@ module.exports = {
     // create the final bundled file in dist folder in the root of the project
     output: {
         path:path.resolve(__dirname, "dist"),
-        publicPath: '/'
+        publicPath: '/',
+        filename: '[name].[contenthash].js',
     },
     // tell webpack to transpile javascript files using babel before bundling
     module: {
