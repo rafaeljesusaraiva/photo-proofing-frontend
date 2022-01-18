@@ -28,11 +28,7 @@ module.exports = {
     output: {
         path:path.resolve(__dirname, "dist"),
         publicPath: '/',
-<<<<<<< HEAD
-        filename: '[name].[contenthash].js',
-=======
         filename: '[name].[contenthash].js'
->>>>>>> 4cd69064b3839aa18ddd07e33bdc6cae02f33b08
     },
     // tell webpack to transpile javascript files using babel before bundling
     module: {
