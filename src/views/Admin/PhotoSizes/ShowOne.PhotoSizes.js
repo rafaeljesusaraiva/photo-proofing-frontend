@@ -8,7 +8,7 @@ const showCosts = (showList) => {
     showList.forEach((element, index) => {
         allItems.push(
             <tr key={index} className="hover">
-                <th className="text-center">{'> '+element.minimumQuantity}</th> 
+                <td className="text-center">{'> '+element.minimumQuantity}</td> 
                 <td className="text-center">{Number(element.price).toFixed(2)+"€ cada"}</td> 
             </tr>
         )

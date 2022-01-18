@@ -12,6 +12,7 @@ export const Api = {
     getSelfInformation,
     resetPassword,
     submitCart,
+    updateProfile,
     updatePassword
 }
 
@@ -159,6 +160,23 @@ function submitCart(orderInfo) {
         .then(HandleResponse)
         .then(response => {
             return response.message;
+        });
+}
+
+function updateProfile(accountID, data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify(data)
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/account/${accountID}`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response;
         });
 }
 

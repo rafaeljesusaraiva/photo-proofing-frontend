@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .masonry {
+        column-count: 2;
+        column-gap: 1.5em;
+    }
+    .break-inside {
+        break-inside: avoid;
+    }  
+}
+  
+
 body, #root {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,6 +21,7 @@ body, #root {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   
+    background-color: #2a2e37;
     min-height: 100vh;
     min-height: -webkit-fill-available;
 }

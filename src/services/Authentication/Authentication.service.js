@@ -74,11 +74,11 @@ function logout(cartJson) {
     return usrRtrn;
 }
 
-function registerUser(name, email, password) {
+function registerUser(name, email, phoneNumber, password) {
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, phoneNumber, password })
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/account`, requestOptions)

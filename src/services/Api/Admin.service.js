@@ -4,6 +4,7 @@ import { Authentication } from "@services";
 export const AdminApi = {
     createEvent,
     createSize,
+    deleteImage,
     deleteSize,
     getAllClients,
     getAllEvents,
@@ -11,9 +12,13 @@ export const AdminApi = {
     getAllPhotoSizes,
     getOneClient,
     getOneEvent,
+    getOneImage,
     getOneOrder,
     getOneSize,
     getWidgetInfo,
+    processOrders,
+    putImage,
+    updateEvent,
     updateOrderStatus,
     updateUserPrivilege
 }
@@ -46,6 +51,22 @@ function createSize(input) {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo_size`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function deleteImage(imageID) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo/`+imageID, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;
@@ -164,6 +185,23 @@ function getOneEvent(id) {
         });
 }
 
+function getOneImage(url) {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(url, requestOptions)
+        .then(response => response.blob())
+        .then(imageBlob => {
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            return imageObjectURL;
+        });
+}
+
 function getOneOrder(id) {
     const requestOptions = {
         method: 'GET',
@@ -206,6 +244,66 @@ function getWidgetInfo() {
     };
 
     return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/stats`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function processOrders() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`http://localhost:8081/order/process_orders`, requestOptions)
+            .then(async res => {
+                var filename = "";
+                var disposition = res.headers.get('Content-Disposition');
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) { 
+                    filename = matches[1].replace(/['"]/g, '');
+                }
+                return {
+                    response: await res.blob(), 
+                    filename: filename
+                }
+            })
+            .catch((e) => {console.log(e)})
+}
+
+function putImage(formData) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: { 
+            // 'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: formData
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/photo`, requestOptions)
+        .then(HandleResponse)
+        .then(response => {
+            return response.message;
+        });
+}
+
+function updateEvent(albumId, data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        },
+        body: JSON.stringify(data)
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/album/${albumId}`, requestOptions)
         .then(HandleResponse)
         .then(response => {
             return response.message;

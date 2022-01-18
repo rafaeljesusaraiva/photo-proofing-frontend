@@ -98,8 +98,8 @@ export function ShowOne(props) {
                                         </label> 
                                         <select className="select select-bordered" defaultValue={orderInfo.status} onChange={(e)=>handleOrderStatus(e)}>
                                             <option value="Cancelada">Cancelada</option> 
-                                            <option value="Recebida">Recebida</option> 
-                                            <option value="Por Pagar">Por Pagar</option> 
+                                            <option value="Recebida - Por Pagar">Recebida - Por Pagar</option> 
+                                            <option value="Paga">Paga</option> 
                                             <option value="A Processar">A Processar</option> 
                                             <option value="Em Entrega">Em Entrega</option> 
                                             <option value="Entregue">Entregue</option> 
@@ -111,7 +111,7 @@ export function ShowOne(props) {
                                         <label className="label">
                                             <span className="label-text">Notas</span>
                                         </label> 
-                                        <textarea className="textarea h-24 textarea-bordered w-50" defaultValue={orderInfo.note ? OrderInfo.note : "Nenhuma Nota"}></textarea>
+                                        <textarea className="textarea h-24 textarea-bordered w-50" defaultValue={orderInfo.note ? orderInfo.note : "Nenhuma Nota"}></textarea>
                                     </div>
                                     <div className="collapse border rounded-box border-base-300 collapse-arrow col-span-1 md:col-span-2 w-full">
                                         <input type="checkbox"/> 

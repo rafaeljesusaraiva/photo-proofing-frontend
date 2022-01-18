@@ -38,7 +38,7 @@ function App() {
             {/*           Admin | Event Routes */}
             <AdminRoute path="/administracao/eventos" exact={true} component={View.AdminEvent.Main} />
             <AdminRoute path="/administracao/eventos/novo" exact={true} component={View.AdminEvent.NewEvent} />
-            <AdminRoute path="/administracao/eventos/:albumId" exact={true} component={View.AdminEvent.Main} />
+            <AdminRoute path="/administracao/eventos/:albumId" exact={true} component={View.AdminEvent.ShowOne} />
             {/*           Admin | Photo Size Routes */}
             <AdminRoute path="/administracao/impressoes" exact={true} component={View.AdminPhotosize.Main} />
             <AdminRoute path="/administracao/impressoes/nova" exact={true} component={View.AdminPhotosize.NewSize} />

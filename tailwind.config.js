@@ -1,6 +1,6 @@
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./src/**/*.{html,js}"],
+  media: false, // or 'media' or 'class'
   theme: {
     maxHeight: {
       '35v': '35vh',
