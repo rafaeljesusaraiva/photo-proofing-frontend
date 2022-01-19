@@ -12,11 +12,14 @@ export function Orders() {
     const openPreview = (url) => setimagePreview({ show: true, url: url });
     const closePreview = () => setimagePreview({ show: false, url: null });
 
-    useEffect(async ()=>{
-        if (orders === false) {
-            setOrders(await Api.getOrders())
+    useEffect(()=>{
+        async function fetchOrders() {
+            if (orders === false) {
+                setOrders(await Api.getOrders())
+            }
         }
-    }, [])
+        fetchOrders();
+    }, [orders])
     
     return (
         <>

@@ -3,53 +3,65 @@ import { Api } from "@services";
 import { MiDownload, MiEye } from "@components/icons";
 
 const compressOrderList = (bigList) => {
-    let items = [], currentProductTotal = 0, currentProductCount = 1, currentProduct = -1;
+    let items = [];
+    let items_status = {
+        current_item: null,         // Item to add to list
+        current_itemCount: 1,       // How many equal items exist
+        monetary_sum: 0,            // Monetary sum of current items
+    }
+    
     bigList.forEach((element, index) => {
-        if (currentProduct === -1) {
-            currentProduct = element;
-            currentProductCount = 1;
-            currentProductTotal = element.price;
-            if (bigList.length === 1) {
-                items.push({
-                    previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + currentProduct.albumSlug + '/' + currentProduct.item,
-                    downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + currentProduct.albumSlug + '/' + currentProduct.item,
-                    name: currentProduct.albumTitle,
-                    size: currentProduct.size,
-                    price: currentProductTotal,
-                    quantity: currentProductCount,
-                    imageName: currentProduct.item
-                });
+        // Check if items_status has content
+        if (items_status.current_item !== null) {
+            // Checks if new product is equal to product in status
+            if (element.item === items_status.current_item.item) {
+                items_status.current_itemCount += 1;
+                items_status.monetary_sum += element.price;
+                return;
             }
-            return;
-        } 
-        if (element.item === currentProduct.item && element.size === currentProduct.size && bigList.length > 1 && index !== 0) {
-            currentProductTotal += currentProduct.price;
-            currentProductCount += 1;
-            if (items.length === 0 && index === bigList.length-1) {
-                items.push({
-                    previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + currentProduct.albumSlug + '/' + currentProduct.item,
-                    downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + currentProduct.albumSlug + '/' + currentProduct.item,
-                    name: currentProduct.albumTitle,
-                    size: currentProduct.size,
-                    price: currentProductTotal,
-                    quantity: currentProductCount,
-                    imageName: currentProduct.item
-                });
-            }
-            return;
-        } 
-        items.push({
-            previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + currentProduct.albumSlug + '/' + currentProduct.item,
-            downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + currentProduct.albumSlug + '/' + currentProduct.item,
-            name: currentProduct.albumTitle,
-            size: currentProduct.size,
-            price: currentProductTotal,
-            quantity: currentProductCount,
-            imageName: currentProduct.item
-        });
-        currentProduct = element;
-        currentProductTotal = currentProduct.price;
-        currentProductCount = 1;
+
+            // console.info('Comparing items: (element & status)')
+            // console.log(element.item);
+            // console.log(items_status.current_item.item)
+            // console.log(element.item === items_status.current_item.item)
+
+            // console.log(element)
+
+            // If new product, submit old status and replace info
+            items.push({
+                previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                name: items_status.current_item.albumTitle,
+                size: items_status.current_item.size,
+                price: items_status.monetary_sum,
+                quantity: items_status.current_itemCount,
+                imageName: items_status.current_item.item
+            });
+
+
+            items_status.current_item = element;
+            items_status.current_itemCount = 1;
+            items_status.monetary_sum = element.price;
+        }
+        // If first Loop adds new info
+        else {
+            items_status.current_item = element;
+            items_status.current_itemCount = 1;
+            items_status.monetary_sum = element.price;
+        }
+
+        // If last item in list
+        if (bigList.length === index+1) {
+            items.push({
+                previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                name: items_status.current_item.albumTitle,
+                size: items_status.current_item.size,
+                price: items_status.monetary_sum,
+                quantity: items_status.current_itemCount,
+                imageName: items_status.current_item.item
+            });
+        }
     });
     return items;
 }
@@ -63,7 +75,6 @@ const countProducts = (products) => {
 }
 
 export function OrdersCollapsable({ orderData, openPreview }) {
-
     const orderNumber = "" + orderData.orderCount;
     const prettyProducts = compressOrderList(orderData.products);
     const totalItems = countProducts(prettyProducts);
@@ -85,8 +96,15 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                 return (<div className="badge">Recebida</div>);
         } 
     }
+    const isDeliverable = () => {
+        if (orderData.status === 'Por Pagar' || orderData.status === 'Cancelada' || orderData.status === 'Recebida') {
+            return false;
+        }
+        return true
+    }
     const downloadImage = async (apiUrl, imageName, orderID) => {
         const blob = await Api.getFinalImage(apiUrl, orderID)
+        console.log(orderID)
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -97,6 +115,7 @@ export function OrdersCollapsable({ orderData, openPreview }) {
     }
     const downloadZip = async (orderID) => {
         const blob = await Api.getOrderZip(orderID)
+        console.log(orderID)
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
@@ -138,7 +157,7 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                                         <button className="btn btn-sm btn-square btn-info mr-2" onClick={()=>openPreview(element.previewLink)}>
                                             <MiEye className="h-6 w-6"/>
                                         </button>
-                                        <button className="btn btn-sm btn-square btn-info" onClick={()=>downloadImage(element.downloadLink, element.imageName, orderData.id)}>
+                                        <button className="btn btn-sm btn-square btn-info" disabled={!isDeliverable()} onClick={()=> isDeliverable() ? downloadImage(element.downloadLink, element.imageName, orderData.id) : false}>
                                             <MiDownload className="h-6 w-6"/>
                                         </button>
                                     </td> 
@@ -167,7 +186,7 @@ export function OrdersCollapsable({ orderData, openPreview }) {
                         "Valor Final:  " + Number(orderData.totalNoPromotion).toFixed(2) + " €"
                     )}
                 </div>
-                <button className="btn btn-sm btn-info my-4" onClick={()=>downloadZip(orderData.id)}>
+                <button className="btn btn-sm btn-info my-4" disabled={!isDeliverable()} onClick={()=> isDeliverable() ? downloadZip(orderData.id) : false}>
                     Descarregar Imagens
                 </button>
                 <div className="form-control mb-2">
