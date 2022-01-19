@@ -17,6 +17,20 @@ const compressOrderList = (bigList) => {
             if (element.item === items_status.current_item.item) {
                 items_status.current_itemCount += 1;
                 items_status.monetary_sum += element.price;
+
+                // If last item in list
+                if (bigList.length === index+1) {
+                    items.push({
+                        previewLink: process.env.REACT_APP_DATABASE_URL + '/public/album/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                        downloadLink: process.env.REACT_APP_DATABASE_URL + '/delivery/' + items_status.current_item.albumSlug + '/' + items_status.current_item.item,
+                        name: items_status.current_item.albumTitle,
+                        size: items_status.current_item.size,
+                        price: items_status.monetary_sum,
+                        quantity: items_status.current_itemCount,
+                        imageName: items_status.current_item.item
+                    });
+                }
+                
                 return;
             }
 
