@@ -75,8 +75,23 @@ export function Main(){
         document.body.removeChild(link);
     }
 
-    useEffect(async ()=>{
-        setOrderList(await AdminApi.getAllOrders());
+    const process_orders_zip = async () => {
+        const resInfo = await AdminApi.processOrdersZip();
+        const url = window.URL.createObjectURL(resInfo.response);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = resInfo.filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    useEffect(()=>{
+        async function execute() {
+            let allOrders = await AdminApi.getAllOrders();
+        setOrderList(allOrders);
+        }
+        execute();
     }, [])
 
     return (
@@ -88,7 +103,8 @@ export function Main(){
                 <div className="overflow-x-auto">
                     <div className="text-xl font-bold mb-4 select-none">
                         Lista Encomendas
-                        <div className="btn btn-accent btn-xs float-right" onClick={() => process_orders()}>Processar Encomendas</div>
+                        <div className="btn btn-accent btn-xs float-right mr-2" onClick={() => process_orders()}>Processar Encomendas (.xlxs)</div>
+                        <div className="btn btn-accent btn-xs float-right" onClick={() => process_orders_zip()}>Processar Encomendas (.zip)</div>
                     </div>
                     <div className="overflow-x-auto">
                         { !orderList ? (

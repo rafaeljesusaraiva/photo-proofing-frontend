@@ -17,6 +17,7 @@ export const AdminApi = {
     getOneSize,
     getWidgetInfo,
     processOrders,
+    processOrdersZip,
     putImage,
     updateEvent,
     updateOrderStatus,
@@ -259,7 +260,33 @@ function processOrders() {
         }
     };
 
-    return fetch(`http://localhost:8081/order/process_orders`, requestOptions)
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/process_orders`, requestOptions)
+            .then(async res => {
+                var filename = "";
+                var disposition = res.headers.get('Content-Disposition');
+                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                var matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1]) { 
+                    filename = matches[1].replace(/['"]/g, '');
+                }
+                return {
+                    response: await res.blob(), 
+                    filename: filename
+                }
+            })
+            .catch((e) => {console.log(e)})
+}
+
+function processOrdersZip() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': Authentication.currentUserValue.token
+        }
+    };
+
+    return fetch(`${process.env.REACT_APP_DATABASE_URL}/order/process_orders_zip`, requestOptions)
             .then(async res => {
                 var filename = "";
                 var disposition = res.headers.get('Content-Disposition');
