@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useIntersection } from '@utils';
+// https://dev.to/shubhamreacts/progressively-loading-images-in-react-40lg
 
 export function AlbumCard(props) {
     const [isInView, setIsInView] = useState(false);
