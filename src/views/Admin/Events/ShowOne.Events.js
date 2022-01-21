@@ -15,22 +15,25 @@ const ShowImages = (slug, full_images, watermarked, deleteImage) => {
         window.open(image)
     }
 
+
     full_images.forEach((image, index) => {
-        allItems.push(
-            <tr key={index} className="hover">
-                <td className="text-center">
-                    <div className="relative max-w-full mx-4 my-2 gap-6 grid grid-cols-3 items-center">
-                        <div className="flex flex-col items-center">
-                            <img src={`${apiDomain}/public/album/${slug}/${watermarked[index].filename}`} id="watermark" className="mb-2"/>
-                            <div className="badge"><span className="select-none mr-2">W:</span>{watermarked[index].filename}</div> 
-                            <div className="badge"><span className="select-none mr-2">O:</span>{image.filename}</div> 
+        if (watermarked[index] !== undefined) {
+            allItems.push(
+                <tr key={index} className="hover">
+                    <td className="text-center">
+                        <div className="relative max-w-full mx-4 my-2 gap-6 grid grid-cols-3 items-center">
+                            <div className="flex flex-col items-center">
+                                <img src={`${apiDomain}/public/album/${slug}/${watermarked[index].filename}`} id="watermark" className="mb-2" alt="album"/>
+                                <div className="badge"><span className="select-none mr-2">W:</span>{watermarked[index].filename}</div> 
+                                <div className="badge"><span className="select-none mr-2">O:</span>{image.filename}</div> 
+                            </div>
+                            <div className="btn btn-primary btn-sm mx-4" onClick={()=>{ openImage(`${apiDomain}/delivery/${slug}/${image.filename}`) }}>Original</div>
+                            <div className="btn btn-error btn-sm" onClick={()=>{ deleteImage(image._id, watermarked[index]._id) }}>X</div>
                         </div>
-                        <div className="btn btn-primary btn-sm mx-4" onClick={()=>{ openImage(`${apiDomain}/delivery/${slug}/${image.filename}`) }}>Original</div>
-                        <div className="btn btn-error btn-sm" onClick={()=>{ deleteImage(image._id, watermarked[index]._id) }}>X</div>
-                    </div>
-                </td> 
-            </tr>
-        )
+                    </td> 
+                </tr>
+            )
+        }
     });
     return allItems;
 }
@@ -104,7 +107,7 @@ export function ShowOne(props) {
     const updateFinal = (images) => { setNewPhotoF(images) };
     const uploadImages = async () => {
         setAlert(null)
-        if (newPhotoF.length == 0 || newPhotoW.length == 0) {
+        if (newPhotoF.length === 0 || newPhotoW.length === 0) {
             setAlert(<AlertBar status="warning" message="É necessário escolher pelo menos uma fotografia!"/>);
             await Timeout(5000);
             setAlert(null);
@@ -126,8 +129,8 @@ export function ShowOne(props) {
             uploadInfoF.append("images", newPhotoF[i]);
         }
 
-        const returnImageF = await AdminApi.putImage(uploadInfoF)
-                                            .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+        await AdminApi.putImage(uploadInfoF)
+                        .catch(err => setAlert(<AlertBar status="error" message={err}/>));
 
         // Upload Watermarked Images
         const uploadInfoW = new FormData();
@@ -138,8 +141,8 @@ export function ShowOne(props) {
             uploadInfoW.append("images", newPhotoW[i]);
         }
 
-        const returnImageW = await AdminApi.putImage(uploadInfoW)
-                                            .catch(err => setAlert(<AlertBar status="error" message={err}/>));
+        await AdminApi.putImage(uploadInfoW)
+                        .catch(err => setAlert(<AlertBar status="error" message={err}/>));
 
         // Refresh Page
         setAlert(<AlertBar status="success" message="Fotografias guardadas com sucesso!"/>);
@@ -162,7 +165,12 @@ export function ShowOne(props) {
                     .catch(err => setAlert(<AlertBar status="error" message={err}/>));
     }
 
-    useEffect(async () => setEventInfo(await AdminApi.getOneEvent(albumId)), [])
+    useEffect(() => {
+        async function execute() {
+            setEventInfo(await AdminApi.getOneEvent(albumId))
+        }
+        execute();
+    }, [albumId])
 
     return (
         <>
@@ -207,7 +215,7 @@ export function ShowOne(props) {
                                                     Não apagar fotografias já encomendadas!
                                                 </div>
                                             </div> 
-                                            <div className="collapse-content"> 
+                                            <div className="collapse-content overflow-y-scroll"> 
                                                 <table className="table w-full table-compact">
                                                     <tbody>
                                                         {ShowImages(eventInfo.slug, eventInfo.images, eventInfo.watermarked, deleteImages)}
@@ -241,7 +249,7 @@ export function ShowOne(props) {
                                                     <input type="file" name="final" multiple={true} required={false} onChange={(e)=>updateFinal(e.target.files)}/>
                                                 </SmallCell>
                                                 <SmallCell>
-                                                    <a className="btn btn-primary btn-sm w-full" onClick={uploadImages}>+</a>
+                                                    <div className="btn btn-primary btn-sm w-full" onClick={uploadImages}>+</div>
                                                 </SmallCell>
                                             </tr>
                                         </tbody>

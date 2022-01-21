@@ -43,31 +43,22 @@ export function Album(props) {
         setAlert(null);
     }
 
-    const showImages = () => {
-        let t = [];
-        images.forEach((singleImage, index) => {
-            let imageInfo = {
-                id: singleImage.id,
-                url: process.env.REACT_APP_DATABASE_URL+singleImage.imagePath
+    useEffect(()=>{
+        async function execute() {
+            // Fetch Data
+            let currentAlbum = FilterAlbum(await Api.getAlbums(), id);
+            setAlbum(currentAlbum);
+            setImages(currentAlbum.images);
+            setOptions(await Api.getPhotoSizes());
+            // Check if user is in order date of album
+            const isValid = DateInBetween(currentAlbum.date_available, (new Date()).toLocaleDateString('pt-PT'), currentAlbum.date_finalOrder);
+            if (!isValid) {
+                return <Redirect push to="/" />
             }
-            t.push(<AlbumCard key={'image-'+index} counter={index+1} data={imageInfo} options={options} addImage={addImageToOrder}/>)
-        })
-        return t;
-    }
-
-    useEffect(async ()=>{
-        // Fetch Data
-        let currentAlbum = FilterAlbum(await Api.getAlbums(), id);
-        setAlbum(currentAlbum);
-        setImages(currentAlbum.images);
-        setOptions(await Api.getPhotoSizes());
-        // Check if user is in order date of album
-        const isValid = DateInBetween(currentAlbum.date_available, (new Date()).toLocaleDateString('pt-PT'), currentAlbum.date_finalOrder);
-        if (!isValid) {
-            return <Redirect push to="/" />
+            document.title = `${currentAlbum.title} | Rafael Jesus Saraiva`;
         }
-        document.title = `${currentAlbum.title} | Rafael Jesus Saraiva`;
-    }, [])
+        execute();
+    }, [id])
 
     return (
         <>
@@ -76,7 +67,13 @@ export function Album(props) {
             <div className="masonry grid gap-6 grid-flow-row-dense grid-cols-1 md:grid-cols-3 lg:grid-cols-4 mx-6 md:mx-auto my-4">
                 {(album === null) ? (
                     <button className="btn btn-4xl loading col-span-3"/>
-                ) : showImages()}
+                ) : images.map((singleImage, index) => {
+                    let imageInfo = {
+                        id: singleImage.id,
+                        url: process.env.REACT_APP_DATABASE_URL+singleImage.imagePath
+                    }
+                    return <AlbumCard key={'image-'+index} counter={index+1} data={imageInfo} options={options} addImage={addImageToOrder}/>
+                })}
             </div>
         </>
     );

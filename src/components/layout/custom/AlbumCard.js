@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import { useIntersection } from '@utils';
 
 export function AlbumCard(props) {
+    const [isInView, setIsInView] = useState(false);
+    const imgRef = useRef();
+    useIntersection(imgRef, () => {
+        setIsInView(true);
+    });
+
     const image = props.data;
     const orderSizes = props.options;
     const addImageToOrder = props.addImage;
@@ -17,9 +24,9 @@ export function AlbumCard(props) {
     }
 
     return (
-        <div className="break-inside flex items-center justify-center">
+        <div className="break-inside flex items-center justify-center" ref={imgRef}>
             <div className=" w-80 bg-base-300 rounded-xl overflow-hidden shadow-lg">
-                <img src={image.url}/>
+                {isInView && (<img src={image.url} alt={image.id}/>)}
                 <div className="p-4">
                     <div className="btn-group flex-nowrap justify-center">
                         {getSizes()}
