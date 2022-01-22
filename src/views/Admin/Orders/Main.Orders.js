@@ -100,13 +100,15 @@ export function Main(){
             <AdminBar/>
             <h2 className="text-4xl mx-6 md:mx-0 my-4 select-none">Administração</h2>
             <div className="overflow-x-hidden flex-grow w-full md:mx-auto my-4">
-                <div className="overflow-x-auto">
-                    <div className="text-xl font-bold mb-4 select-none">
+                <div className="overflow-x-auto mx-6">
+                    <div className="text-xl font-bold mb-4 select-none w-full">
                         Lista Encomendas
-                        <div className="btn btn-accent btn-xs float-right mr-2" onClick={() => process_orders()}>Processar Encomendas (.xlxs)</div>
-                        <div className="btn btn-accent btn-xs float-right" onClick={() => process_orders_zip()}>Processar Encomendas (.zip)</div>
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="mb-4 w-full text-right">
+                        <div className="btn btn-accent btn-xs mb-2 md:mb-0 md:mr-2" onClick={() => process_orders()}>Processar Encomendas (.xlxs)</div>
+                        <div className="btn btn-accent btn-xs" onClick={() => process_orders_zip()}>Processar Encomendas (.zip)</div>
+                    </div>
+                    <div className="overflow-x-auto w-full">
                         { !orderList ? (
                             <button className="btn btn-circle loading md:col-span-3 w-full"></button>
                         ) : (
