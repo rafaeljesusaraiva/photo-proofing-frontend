@@ -41,8 +41,11 @@ export function AdminDashboard() {
 
     const [widgetInfo, setWidgetInfo] = useState(null);
 
-    useEffect(async ()=>{
-        setWidgetInfo(await AdminApi.getWidgetInfo());
+    useEffect(() => {
+        const execute = async () => {
+            setWidgetInfo(await AdminApi.getWidgetInfo());
+        }
+        execute();
     }, [])
 
     return (
@@ -54,35 +57,28 @@ export function AdminDashboard() {
                 <button className="btn btn-circle loading md:col-span-3 w-full"></button>
             ) : (
                 <>
-                    <div className="grid gap-6 grid-cols-1 md:grid-cols-3 justify-center shrink mx-6 md:mx-0 my-4">
-                        {/* Small Widgets */}
-                        <div className="card bordered bg-base-300 p-4 h-32">
-                            <span className="font-bold">Encomendas</span>
-                            <span className="text-xs italic">Esta Semana</span>
-                            <div className="p-2 text-4xl font-bold">
-                                {widgetInfo.orderCount}
-                            </div>
-                        </div>
-                        <div className="card bordered bg-base-300 p-4 h-32">
-                            <span className="font-bold">Vendas</span>
-                            <span className="text-xs italic">Esta Semana</span>
-                            <div className="p-2 text-4xl font-bold">
-                                {widgetInfo.sumSales}
-                            </div>
-                        </div>
-                        <div className="card bordered bg-base-300 p-4 h-32">
-                            <span className="font-bold">Despesas</span>
-                            <span className="text-xs italic">Esta Semana</span>
-                            <div className="p-2 text-4xl font-bold">
-                                {widgetInfo.sumExpenses}
-                            </div>
+                    <div class="grid-flow-row md:grid-flow-col shadow stats mx-6 md:mx-0 my-4">
+                        <div class="stat place-items-center place-content-center bg-base-300">
+                            <div class="stat-title">Encomendas</div> 
+                            <div class="stat-value">{widgetInfo.orderCount}</div> 
+                            <div class="stat-desc">Até agora</div>
+                        </div> 
+                        <div class="stat place-items-center place-content-center bg-base-300">
+                            <div class="stat-title">Vendas</div> 
+                            <div class="stat-value text-success">{widgetInfo.sumSales}</div> 
+                            <div class="stat-desc text-success">Até agora</div>
+                        </div> 
+                        <div class="stat place-items-center place-content-center bg-base-300">
+                            <div class="stat-title">Despesas</div> 
+                            <div class="stat-value text-error">{widgetInfo.sumExpenses}</div> 
+                            <div class="stat-desc text-error">Até agora</div>
                         </div>
                     </div>
                     {/* Big List Widget */}
-                    <div className="text-2xl font-bold shrink">
+                    <div className="text-2xl font-bold shrink mx-6 md:mx-0">
                         Últimas Encomendas
                     </div>
-                    <table className="table w-full grow">
+                    <table className="table grow mx-2 md:mx-0">
                         <thead>
                             <tr>
                                 <th className="text-center">#</th> 

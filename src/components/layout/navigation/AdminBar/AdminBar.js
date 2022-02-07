@@ -9,7 +9,7 @@ const AdminBarButton = ({url, name}) => {
 
 export function AdminBar() {
     return (
-        <div className="btn-group bg-base-300 rounded-lg flex justify-evenly md:flex-nowrap w-full mb-6 shrink">
+        <div className="btn-group bg-base-300 md:rounded-lg flex justify-evenly md:flex-nowrap w-full mb-6 shrink">
             <AdminBarButton url="/administracao" name="Início"/>
             <AdminBarButton url="/administracao/eventos" name="Eventos"/>
             <AdminBarButton url="/administracao/clientes" name="Clientes"/>
