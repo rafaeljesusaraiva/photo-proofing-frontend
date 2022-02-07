@@ -95,7 +95,7 @@ export function OrdersCollapsable({ orderData, openPreview }) {
     let currentState = () => {
         let status = orderData.status;
         switch (status) {
-            case 'Por Pagar':
+            case 'Recebida - Por Pagar':
                 return (<div className="badge badge-primary">{status}</div>);
             case 'A Processar':
                 return (<div className="badge badge-accent">{status}</div>);
@@ -111,7 +111,7 @@ export function OrdersCollapsable({ orderData, openPreview }) {
         } 
     }
     const isDeliverable = () => {
-        if (orderData.status === 'Por Pagar' || orderData.status === 'Cancelada' || orderData.status === 'Recebida') {
+        if (orderData.status === 'Recebida - Por Pagar' || orderData.status === 'Cancelada' || orderData.status === 'A Processar' || orderData.status === 'Em Entrega') {
             return false;
         }
         return true

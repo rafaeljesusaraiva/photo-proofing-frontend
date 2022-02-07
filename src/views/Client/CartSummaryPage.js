@@ -22,12 +22,12 @@ const CartTableHead = () => {
 
 
 const JointInput = (props) => {
-    let { inputText, buttonText, oldPrice, handleOrder } = props;
+    let { inputText, buttonText, oldPrice, handleOrder, isHandling } = props;
     return (
         <div className="w-full float:none md:float-left text-center md:text-left mb-4">
             <div className="float:none md:float-right relative">
                 <input readOnly={true} type="text" className="focus:shadow-none select-none w-full pr-32 md:pr-40 input input-primary border-0 cursor-default font-bold" value={inputText}/> 
-                <button className="absolute top-0 right-0 rounded-l-none btn btn-primary" onClick={handleOrder}>{buttonText}</button>
+                <button className="absolute top-0 right-0 rounded-l-none btn btn-primary" disabled={isHandling} onClick={handleOrder}>{buttonText}</button>
             </div>
             <div className="float:none md:float-right">
             {(oldPrice !== '') ? (
@@ -55,17 +55,19 @@ const formatItems = (itemList) => {
 
 export function CartSummary(props) {
 
+    let history = useHistory();
     const { items, cartTotal, emptyCart } = useCart();
+    const [imagePreview, setimagePreview] = useState({ show: false, url: null });
+    const [alert, setAlert] = useState(null);
+    const [orderNote, setOrderNote] = useState("");
+    const [isHandling, setIsHandling] = useState(false);
+
     if (items.length === 0) { return <Redirect to="/carrinho"/> }
 
     document.title = `Resumo Carrinho | Rafael Jesus Saraiva`;
 
-    let history = useHistory();
     let currentUser = Authentication.currentUserValue;
     const { state } = props.location;
-    const [imagePreview, setimagePreview] = useState({ show: false, url: null });
-    const [alert, setAlert] = useState(null);
-    const [orderNote, setOrderNote] = useState("")
     const promoStatus = (state.promoStatus !== undefined && state.promoStatus !== null) ? state.promoStatus : null;
     const promoCode = (state.promoCode !== undefined && state.promoCode !== null) ? state.promoCode : null;
 
@@ -73,6 +75,7 @@ export function CartSummary(props) {
     const closePreview = () => setimagePreview({ show: false, url: null });
 
     const handleOrder = async () => {
+        setIsHandling(true);
         let orderInfo = { 
             client: currentUser.id, 
             items: formatItems(items), 
@@ -81,8 +84,9 @@ export function CartSummary(props) {
         }
 
         let order = await Api.submitCart(orderInfo).catch(err => setAlert(<AlertBar status="error" message={err}/>));
-        if (order && order.status === 'Recebida') {
+        if (order && order.status === 'Recebida - Por Pagar') {
             emptyCart();
+            setIsHandling(false);
             history.push({
                 pathname: '/encomenda-finalizada',
                 state: {
@@ -120,9 +124,15 @@ export function CartSummary(props) {
                                 buttonText="Finalizar Encomenda" 
                                 oldPrice={Number(cartTotal).toFixed(2)+" €"}
                                 handleOrder={handleOrder}
+                                isHandling={isHandling}
                             />
                         ) : (
-                            <JointInput inputText={"Total  " + Number(cartTotal).toFixed(2) + " €"} buttonText="Finalizar Encomenda" handleOrder={handleOrder}/>
+                            <JointInput 
+                                inputText={"Total  " + Number(cartTotal).toFixed(2) + " €"} 
+                                buttonText="Finalizar Encomenda" 
+                                handleOrder={handleOrder}
+                                isHandling={isHandling}
+                            />
                         )}
                     </>
                 ) : (
