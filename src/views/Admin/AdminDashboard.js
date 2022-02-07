@@ -44,8 +44,6 @@ export function AdminDashboard() {
     useEffect(async ()=>{
         setWidgetInfo(await AdminApi.getWidgetInfo());
     }, [])
-    
-    console.log(widgetInfo)
 
     return (
         <>
