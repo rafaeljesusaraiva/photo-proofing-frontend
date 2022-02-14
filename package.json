@@ -42,7 +42,7 @@
   },
   "scripts": {
     "dev": "webpack serve --mode=development --open",
-    "build": "export NODE_ENV=production && webpack --progress"
+    "build": "export NODE_ENV=production && webpack build --progress"
   },
   "eslintConfig": {
     "extends": [
