@@ -24,9 +24,9 @@ module.exports = {
     },
     // where to start bundling the javascript files
     entry: path.join(__dirname, "src", "index.js"),
-    // create the final bundled file in dist folder in the root of the project
+    // create the final bundled file in build folder in the root of the project
     output: {
-        path:path.resolve(__dirname, "dist"),
+        path:path.resolve(__dirname, "build"),
         publicPath: '/',
         filename: '[name].[contenthash].js'
     },
