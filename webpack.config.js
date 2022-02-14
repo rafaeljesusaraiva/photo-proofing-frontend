@@ -7,6 +7,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // used to add .env file
 const Dotenv = require('dotenv-webpack');
+// Copy public files to build folder
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -82,7 +84,10 @@ module.exports = {
           template: path.join(__dirname, "public", "index.html"),
         }),
         new Dotenv(),
-        // new BundleAnalyzerPlugin()
+        // new BundleAnalyzerPlugin(),
+        new CopyWebpackPlugin({
+            patterns: [{ from: 'public' }]
+        })
     ],
     optimization: {
         splitChunks: {
